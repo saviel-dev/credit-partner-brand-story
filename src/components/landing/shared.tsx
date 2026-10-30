@@ -21,18 +21,19 @@ export function Reveal({ children, delay = 0, ...rest }: HTMLMotionProps<"div"> 
   );
 }
 
-// Botón CTA con elevación y flecha animada al hover
-export function CtaButton({ children, size = "lg" }: { children: ReactNode; size?: "sm" | "lg" }) {
+// Botón CTA con elevación y flecha animada al hover; "glow" añade sombra verde
+export function CtaButton({ children, size = "lg", glow = false }: { children: ReactNode; size?: "sm" | "lg"; glow?: boolean }) {
   const sizing = size === "lg" ? "px-7 py-4 text-base" : "px-5 py-2.5 text-sm";
+  const shadow = glow ? "shadow-cta hover:shadow-cta-hover" : "hover:shadow-lift";
   return (
     <a
       href={CALENDLY_URL}
       target="_blank"
       rel="noopener noreferrer"
-      className={`group inline-flex items-center gap-2 rounded-full bg-primary font-semibold text-primary-foreground transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lift ${sizing}`}
+      className={`group inline-flex items-center gap-2 rounded-[30px] bg-primary font-semibold text-primary-foreground transition-all duration-300 hover:-translate-y-0.5 ${shadow} ${sizing}`}
     >
       {children}
-      <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1.5" />
+      <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
     </a>
   );
 }

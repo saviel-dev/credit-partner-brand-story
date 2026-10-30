@@ -1,7 +1,7 @@
 // Landing page "Magazine Editorial Premium" de Credit Partner Pro
 import { createFileRoute } from "@tanstack/react-router";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 import { Lock, ShieldCheck, Award, TrendingUp } from "lucide-react";
 import logo from "@/assets/logo.png.asset.json";
 import heroCutout from "@/assets/hero-businessman-cutout.png";

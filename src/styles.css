@@ -189,3 +189,6 @@
 }
 @keyframes float { 0%,100% { transform: translateY(-5px); } 50% { transform: translateY(5px); } }
 @keyframes float-reverse { 0%,100% { transform: translateY(5px); } 50% { transform: translateY(-5px); } }
+/* Panel de color del hero: degradado sutil verde → azul */
+:root { --hero-panel: linear-gradient(160deg, var(--primary) 0%, color-mix(in oklab, var(--primary) 70%, var(--navy)) 100%); }
+@utility bg-hero-panel { background-image: var(--hero-panel); }

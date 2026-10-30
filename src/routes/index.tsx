@@ -1,10 +1,10 @@
 // Landing page "Magazine Editorial Premium" de Credit Partner Pro
 import { createFileRoute } from "@tanstack/react-router";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
-import { Lock, ShieldCheck, Award, Star, TrendingUp } from "lucide-react";
+import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { Lock, ShieldCheck, Award, TrendingUp } from "lucide-react";
 import logo from "@/assets/logo.png.asset.json";
-import heroImg from "@/assets/hero-businessman.jpg";
+import heroCutout from "@/assets/hero-businessman-cutout.png";
 import { CtaButton, Reveal } from "@/components/landing/shared";
 
 // Imágenes de Unsplash para las demás secciones
@@ -71,109 +71,107 @@ function Navbar() {
   );
 }
 
-// 2. Hero dinámico con elementos flotantes (60% texto / 40% imagen)
-// Variantes para la entrada escalonada del texto
-const heroText = { hidden: {}, show: { transition: { staggerChildren: 0.12 } } };
+// 2. Hero compacto con fondo dividido (55% texto / 45% panel de color), cabe en el viewport
+// Variantes para la entrada escalonada del texto (0.1s entre elementos)
+const heroText = { hidden: {}, show: { transition: { staggerChildren: 0.1 } } };
 const heroItem = {
-  hidden: { opacity: 0, y: 24 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as const } },
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const } },
 };
-// Aparición retrasada de cada elemento flotante
+// Aparición retrasada de los elementos flotantes
 const popIn = (delay: number) => ({
   initial: { opacity: 0, scale: 0.8 },
   animate: { opacity: 1, scale: 1 },
-  transition: { duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] as const },
+  transition: { duration: 0.5, delay, ease: [0.22, 1, 0.36, 1] as const },
 });
 
+// Cifras destacadas bajo el subtítulo
+const HERO_STATS = [
+  { value: "680+", label: "Credit Score" },
+  { value: "680+", label: "Verified Partners" },
+  { value: "$2,500", label: "Max Advance" },
+];
+
 function Hero() {
-  const ref = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const y = useTransform(scrollYProgress, [0, 1], [0, 60]);
   return (
-    <section ref={ref} className="relative overflow-hidden pb-20 pt-28 md:pb-28 md:pt-36">
-      <div className="mx-auto grid max-w-7xl items-center gap-16 px-5 md:px-8 lg:grid-cols-5">
+    <section className="relative overflow-hidden lg:h-[88vh] lg:min-h-[600px]">
+      {/* Panel de color de la mitad derecha (solo escritorio, llega hasta el borde) */}
+      <div className="absolute inset-y-0 right-0 hidden w-[45%] bg-hero-panel lg:block" />
+
+      <div className="relative mx-auto grid h-full max-w-7xl lg:grid-cols-[55fr_45fr]">
         {/* Columna izquierda: contenido */}
-        <motion.div variants={heroText} initial="hidden" animate="show" className="lg:col-span-3">
-          <motion.p variants={heroItem} className="text-xs font-semibold uppercase tracking-[0.3em] text-hero-muted">
+        <motion.div
+          variants={heroText}
+          initial="hidden"
+          animate="show"
+          className="flex flex-col justify-center px-5 pb-12 pt-28 md:px-8 lg:pb-8 lg:pr-12 lg:pt-24"
+        >
+          <motion.p variants={heroItem} className="text-[11px] font-semibold uppercase tracking-[2px] text-hero-muted">
             Issue No. 01 • Credit Partnerships
           </motion.p>
-          <motion.span
-            variants={heroItem}
-            className="mt-5 inline-flex items-center gap-2 rounded-[20px] border border-primary bg-background px-4 py-2 text-sm font-medium text-primary"
-          >
-            <Star className="h-3.5 w-3.5 fill-primary" /> Exclusive Program for 680+ Credit Profiles
-          </motion.span>
           <motion.h1
             variants={heroItem}
-            className="mt-6 text-[2.1rem] leading-[1.1] font-bold text-foreground sm:text-5xl lg:text-[3.5rem]"
+            className="mt-4 text-[2.1rem] leading-[1.1] font-black text-foreground sm:text-[2.6rem] xl:text-[3.25rem]"
           >
             Unlock New Business Opportunities with Your <em className="text-primary">Excellent</em> Credit Profile
           </motion.h1>
-          <motion.p variants={heroItem} className="mt-6 max-w-xl text-base leading-relaxed text-hero-body md:text-lg">
-            <strong className="text-foreground">Where Your Credit Becomes a Real Asset.</strong> Leverage your strong
-            financial history to access monthly income opportunities and available advances up to $2,500.
+          <motion.p variants={heroItem} className="mt-5 max-w-lg text-[15px] leading-relaxed text-hero-body md:text-base">
+            <strong className="text-foreground">Where Your Credit Becomes a Real Asset.</strong> Access monthly income
+            opportunities and advances up to $2,500.
           </motion.p>
-          <motion.div variants={heroItem} className="mt-10 flex flex-wrap items-center gap-4">
-            {/* Decoración: doble flecha + línea fina */}
-            <div className="hidden items-center gap-2 text-primary sm:flex">
-              <span className="font-serif text-2xl leading-none">«</span>
-              <span className="h-px w-14 bg-primary/50" />
-            </div>
-            <CtaButton glow>Start Quick Credit Verification</CtaButton>
+
+          {/* Fila de estadísticas con separadores */}
+          <motion.dl variants={heroItem} className="mt-7 grid max-w-md grid-cols-3 divide-x divide-border">
+            {HERO_STATS.map((s) => (
+              <div key={s.label} className="px-3 first:pl-0">
+                <dt className="sr-only">{s.label}</dt>
+                <dd className="font-serif text-2xl font-bold text-foreground md:text-[1.9rem]">{s.value}</dd>
+                <dd className="mt-1 text-[10px] uppercase tracking-wider text-hero-muted md:text-[11px]">{s.label}</dd>
+              </div>
+            ))}
+          </motion.dl>
+
+          <motion.div variants={heroItem} className="mt-8">
+            <CtaButton glow shape="square">Start Quick Credit Verification</CtaButton>
           </motion.div>
         </motion.div>
 
-        {/* Columna derecha: imagen + elementos flotantes */}
-        <div className="relative mx-auto w-full max-w-[19rem] pt-8 sm:max-w-sm lg:col-span-2 lg:max-w-none">
-          {/* Halo circular de fondo con rotación lenta */}
-          <div className="pointer-events-none absolute left-1/2 top-1/2 h-[320px] w-[320px] -translate-x-1/2 -translate-y-1/2 sm:h-[400px] sm:w-[400px]">
-            <div className="h-full w-full animate-spin-slow rounded-full border border-dashed border-navy/20 bg-navy/5" />
-          </div>
+        {/* Columna derecha: imagen recortada integrada al fondo de color */}
+        <div className="relative flex min-h-[420px] items-end justify-center bg-hero-panel pt-10 lg:bg-transparent lg:pt-24">
+          {/* Anillos decorativos sutiles */}
+          <div className="pointer-events-none absolute left-1/2 top-1/2 h-72 w-72 -translate-x-1/2 -translate-y-1/2 rotate-12 rounded-[3rem] border-2 border-primary-foreground/15 lg:h-96 lg:w-96" />
+          <div className="pointer-events-none absolute left-1/2 top-1/2 h-52 w-52 -translate-x-1/2 -translate-y-1/2 rotate-12 rounded-[2.5rem] border-2 border-primary-foreground/10 lg:h-72 lg:w-72" />
 
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
+          <motion.img
+            src={heroCutout}
+            alt="Business professional in suit and glasses"
+            width={896}
+            height={1120}
+            initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative"
-          >
-            {/* Marco verde desplazado */}
-            <div className="absolute -bottom-3 -right-3 h-full w-full rounded-lg border border-primary sm:-bottom-4 sm:-right-4" />
-            <motion.div style={{ y }} className="relative overflow-hidden rounded-lg shadow-lift">
-              <img src={heroImg} alt="Business professional in suit and glasses" width={896} height={1120} className="aspect-[4/5] w-full object-cover" />
-            </motion.div>
+            className="relative h-[380px] w-auto origin-bottom object-contain lg:h-[78%]"
+          />
 
-            {/* Flotante 1: socios verificados */}
-            <motion.div {...popIn(0.5)} className="absolute -left-4 -top-5 sm:-left-8">
-              <div className="flex animate-float items-center gap-3 rounded-xl bg-background px-3 py-2.5 shadow-lift sm:px-4 sm:py-3">
-                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-primary sm:h-10 sm:w-10">
-                  <ShieldCheck className="h-4 w-4 sm:h-5 sm:w-5" />
-                </span>
-                <div>
-                  <p className="text-xs font-bold text-foreground sm:text-sm">Verified Partners</p>
-                  <p className="text-[11px] text-hero-muted sm:text-xs">100% Secure</p>
-                </div>
+          {/* Flotante 1: tarjeta "Verified 100%" que sobresale a la derecha */}
+          <motion.div {...popIn(0.6)} className="absolute right-3 top-[20%] lg:right-8">
+            <div className="flex animate-float items-center gap-3 rounded-xl bg-background px-4 py-3 shadow-lift">
+              <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                <TrendingUp className="h-5 w-5" />
+              </span>
+              <div>
+                <p className="text-[11px] uppercase tracking-wider text-hero-muted">Verified</p>
+                <p className="font-serif text-xl font-bold text-foreground">100%</p>
               </div>
-            </motion.div>
-
-            {/* Flotante 2: anticipos disponibles */}
-            <motion.div {...popIn(0.7)} className="absolute -right-4 bottom-8 sm:-right-10">
-              <div className="animate-float-reverse rounded-xl bg-navy px-4 py-3 text-navy-foreground shadow-lift sm:px-5 sm:py-4">
-                <p className="font-serif text-2xl font-bold sm:text-3xl">$2,500</p>
-                <p className="text-[11px] opacity-80 sm:text-xs">Available Advances</p>
-              </div>
-            </motion.div>
-
-            {/* Decorativo 3: círculo con gráfico ascendente */}
-            <motion.div {...popIn(0.9)} className="absolute -right-3 top-10 sm:-right-5">
-              <div className="flex h-11 w-11 animate-float items-center justify-center rounded-full bg-primary text-primary-foreground shadow-cta sm:h-[60px] sm:w-[60px]">
-                <TrendingUp className="h-5 w-5 sm:h-6 sm:w-6" />
-              </div>
-            </motion.div>
+            </div>
           </motion.div>
 
-          <p className="relative mt-8 text-center font-serif text-sm italic text-hero-muted">
-            Your credit, finally working for you.
-          </p>
+          {/* Flotante 2: insignia circular blanca con check */}
+          <motion.div {...popIn(0.8)} className="absolute bottom-[25%] left-3 lg:-left-4">
+            <div className="flex h-[50px] w-[50px] animate-float-reverse items-center justify-center rounded-full bg-background text-primary shadow-lift">
+              <ShieldCheck className="h-6 w-6" />
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>

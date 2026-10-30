@@ -154,6 +154,7 @@
   --font-serif: "Playfair Display", Georgia, serif;
   --font-sans: "Plus Jakarta Sans", system-ui, sans-serif;
   --font-hero: "Oswald", "Arial Narrow", sans-serif;
+  --font-heading: "Plus Jakarta Sans", system-ui, sans-serif;
   --shadow-lift: var(--shadow-lift);
 }
 

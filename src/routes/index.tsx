@@ -13,18 +13,27 @@ const WOMAN_IMG =
 const HERO_FEATURES = [
   {
     Icon: ShieldCheck,
-    title: "Quick verification",
-    description: "A simple review to confirm your credit profile.",
+    title: "Quick Verification",
+    description: "A simple review to confirm your credit profile in minutes.",
+    stat: "< 24 hrs",
+    statLabel: "Avg. review time",
+    accent: "from-primary/80 to-primary",
   },
   {
     Icon: TrendingUp,
-    title: "Monthly opportunities",
-    description: "Explore options matched to your financial profile.",
+    title: "Monthly Opportunities",
+    description: "Explore income options matched to your financial profile.",
+    stat: "680+",
+    statLabel: "Credit score required",
+    accent: "from-emerald-400 to-emerald-600",
   },
   {
     Icon: Award,
-    title: "Advances up to $2,500",
-    description: "Access depends on eligibility and verification.",
+    title: "Up to $2,500",
+    description: "Access cash advances based on your eligibility and verification.",
+    stat: "$2,500",
+    statLabel: "Maximum advance",
+    accent: "from-sky-400 to-blue-600",
   },
 ];
 
@@ -85,7 +94,10 @@ function Navbar() {
           alt="Credit Partner Pro"
           className="w-[140px] object-contain md:w-[180px]"
         />
-        <CtaButton size="sm">
+        <CtaButton
+          size="sm"
+          className="!rounded-full !border !border-white/80 !bg-white !px-6 !py-3 !text-sm !font-bold !text-[#087f65] !shadow-md !shadow-[#075475]/15 hover:!bg-white hover:!shadow-lg [&>svg]:h-4 [&>svg]:w-4"
+        >
           Get Verified
         </CtaButton>
       </div>
@@ -241,26 +253,44 @@ function Hero() {
   );
 }
 
+
 function HeroFeatureCards() {
   return (
-    <section className="relative z-10 mx-auto -mt-1 grid max-w-7xl gap-3 px-5 pb-12 sm:grid-cols-3 md:px-8 lg:-mt-8 lg:pb-16">
-      {HERO_FEATURES.map(({ Icon, title, description }, index) => (
+    <section className="relative z-10 mx-auto -mt-1 grid max-w-7xl gap-4 px-5 pb-12 sm:grid-cols-3 md:px-8 lg:-mt-8 lg:pb-16">
+      {HERO_FEATURES.map(({ Icon, title, description, stat, statLabel, accent }, index) => (
         <Reveal
           key={title}
           delay={index * 0.1}
-          className="rounded-xl border border-border/70 bg-background p-5 shadow-lift transition-transform duration-300 hover:-translate-y-1 sm:p-6"
+          className="group relative overflow-hidden rounded-2xl border border-border/60 bg-background p-6 shadow-lift transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
         >
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
-            <Icon className="h-5 w-5" strokeWidth={1.8} />
+          {/* Gradient top accent bar */}
+          <div className={`absolute inset-x-0 top-0 h-[3px] bg-gradient-to-r ${accent}`} />
+          {/* Icon — top left */}
+          <div className={`inline-flex items-center justify-center rounded-xl bg-gradient-to-br p-2.5 ${accent}`}>
+            <Icon className="h-5 w-5 text-white" strokeWidth={2} />
           </div>
-          <h2 className="mt-4 text-lg font-bold text-foreground">{title}</h2>
-          <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{description}</p>
+          {/* Title */}
+          <h2 className="mt-4 font-heading text-[1.15rem] font-extrabold leading-snug tracking-tight text-foreground">
+            {title}
+          </h2>
+          {/* Description */}
+          <p className="mt-2 font-sans text-[13px] leading-relaxed text-muted-foreground">{description}</p>
+          {/* Divider */}
+          <div className="my-4 h-px bg-border" />
+          {/* Stat row */}
+          <div className="flex items-baseline gap-1.5">
+            <span className={`bg-gradient-to-r bg-clip-text font-heading text-2xl font-extrabold tracking-tight text-transparent ${accent}`}>
+              {stat}
+            </span>
+            <span className="font-heading text-[10px] font-bold uppercase tracking-[0.16em] text-muted-foreground/60">
+              {statLabel}
+            </span>
+          </div>
         </Reveal>
       ))}
     </section>
   );
 }
-
 // 3. Sección editorial: el crédito como activo
 function AssetSection() {
   return (

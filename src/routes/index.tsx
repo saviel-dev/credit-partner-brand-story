@@ -2,9 +2,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import { Lock, ShieldCheck, Award, Star, TrendingUp } from "lucide-react";
+import { Lock, ShieldCheck, Award, TrendingUp } from "lucide-react";
 import logo from "@/assets/logo.png.asset.json";
-import heroImg from "@/assets/hero-businessman.jpg";
+import heroCutout from "@/assets/hero-businessman-cutout.png";
 import { CtaButton, Reveal } from "@/components/landing/shared";
 
 // Imágenes de Unsplash para las demás secciones

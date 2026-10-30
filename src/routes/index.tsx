@@ -154,7 +154,7 @@ function Hero() {
           />
 
           {/* Flotante 1: tarjeta "Verified 100%" que sobresale a la derecha */}
-          <motion.div {...popIn(0.6)} className="absolute right-3 top-[20%] lg:-right-5">
+          <motion.div {...popIn(0.6)} className="absolute right-3 top-[20%] lg:right-8">
             <div className="flex animate-float items-center gap-3 rounded-xl bg-background px-4 py-3 shadow-lift">
               <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10 text-primary">
                 <TrendingUp className="h-5 w-5" />

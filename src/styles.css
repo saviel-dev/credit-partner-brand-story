@@ -132,6 +132,30 @@
   --sidebar-ring: oklch(0.551 0.027 264.364);
 }
 
+/* Paleta de marca Credit Partner Pro (verde #128160, azul #055475) */
+:root {
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.42 0.085 230);
+  --primary: oklch(0.53 0.1 170);
+  --primary-foreground: oklch(1 0 0);
+  --navy: oklch(0.42 0.085 230);
+  --navy-foreground: oklch(1 0 0);
+  --muted: oklch(0.982 0.002 248);
+  --muted-foreground: oklch(0.55 0.02 240);
+  --ghost-number: oklch(0.955 0 0);
+  --border: oklch(0.9 0.01 230);
+  --shadow-lift: 0 18px 40px -18px color-mix(in oklab, var(--navy) 35%, transparent);
+}
+
+@theme inline {
+  --color-navy: var(--navy);
+  --color-navy-foreground: var(--navy-foreground);
+  --color-ghost-number: var(--ghost-number);
+  --font-serif: "Playfair Display", Georgia, serif;
+  --font-sans: "Plus Jakarta Sans", system-ui, sans-serif;
+  --shadow-lift: var(--shadow-lift);
+}
+
 @layer base {
   * {
     border-color: var(--color-border);
@@ -140,5 +164,9 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: var(--font-sans);
+  }
+  h1, h2, h3 {
+    font-family: var(--font-serif);
   }
 }

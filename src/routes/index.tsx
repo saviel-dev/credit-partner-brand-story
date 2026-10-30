@@ -3,8 +3,6 @@ import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { Lock, ShieldCheck, Award, TrendingUp } from "lucide-react";
-import logo from "@/assets/logo.png.asset.json";
-import heroCutout from "@/assets/hero-businessman-cutout.png";
 import { CtaButton, Reveal } from "@/components/landing/shared";
 
 // Imágenes de Unsplash para las demás secciones
@@ -12,6 +10,23 @@ const DOCS_IMG =
   "https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=1100&q=80";
 const WOMAN_IMG =
   "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=800&q=80";
+const HERO_FEATURES = [
+  {
+    Icon: ShieldCheck,
+    title: "Quick verification",
+    description: "A simple review to confirm your credit profile.",
+  },
+  {
+    Icon: TrendingUp,
+    title: "Monthly opportunities",
+    description: "Explore options matched to your financial profile.",
+  },
+  {
+    Icon: Award,
+    title: "Advances up to $2,500",
+    description: "Access depends on eligibility and verification.",
+  },
+];
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -39,6 +54,7 @@ function Index() {
     <div className="min-h-screen overflow-x-hidden bg-background">
       <Navbar />
       <Hero />
+      <HeroFeatureCards />
       <AssetSection />
       <ProcessSection />
       <TrustSection />
@@ -64,8 +80,14 @@ function Navbar() {
       }`}
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 md:h-20 md:px-8">
-        <img src={logo.url} alt="Credit Partner Pro" className="h-9 w-auto md:h-11" />
-        <CtaButton size="sm">Get Verified</CtaButton>
+        <img
+          src="/images/credit-partner-logo.png"
+          alt="Credit Partner Pro"
+          className="w-[140px] object-contain md:w-[180px]"
+        />
+        <CtaButton size="sm">
+          Get Verified
+        </CtaButton>
       </div>
     </header>
   );
@@ -94,86 +116,147 @@ const HERO_STATS = [
 
 function Hero() {
   return (
-    <section className="relative overflow-hidden lg:h-[88vh] lg:min-h-[600px]">
-      {/* Panel de color de la mitad derecha (solo escritorio, llega hasta el borde) */}
-      <div className="absolute inset-y-0 right-0 hidden w-[45%] bg-hero-panel lg:block" />
+    <section className="relative overflow-hidden pt-16">
+      <div className="absolute inset-y-0 right-0 hidden w-1/2 bg-[#59c5a4] lg:block" />
 
-      <div className="relative mx-auto grid h-full max-w-7xl lg:grid-cols-[55fr_45fr]">
-        {/* Columna izquierda: contenido */}
+      <div className="relative mx-auto grid max-w-7xl lg:min-h-[500px] lg:grid-cols-2">
         <motion.div
           variants={heroText}
           initial="hidden"
           animate="show"
-          className="flex flex-col justify-center px-5 pb-12 pt-28 md:px-8 lg:pb-8 lg:pr-12 lg:pt-24"
+          className="flex flex-col justify-center px-5 pb-7 pt-8 md:px-8 lg:py-8 lg:pr-12"
         >
-          <motion.p variants={heroItem} className="text-[11px] font-semibold uppercase tracking-[2px] text-hero-muted">
-            Issue No. 01 • Credit Partnerships
+          <motion.p variants={heroItem} className="text-[11px] font-bold uppercase tracking-[0.16em] text-primary">
+            Credit Partner Pro
           </motion.p>
           <motion.h1
             variants={heroItem}
-            className="mt-4 text-[2.1rem] leading-[1.1] font-black text-foreground sm:text-[2.6rem] xl:text-[3.25rem]"
+            className="mt-3 max-w-xl font-hero text-[2.45rem] leading-[0.98] font-bold tracking-[-0.025em] text-foreground uppercase sm:text-5xl xl:text-[4.5rem]"
           >
-            Unlock New Business Opportunities with Your <em className="text-primary">Excellent</em> Credit Profile
+            Great Credit,{" "}
+            <span className="text-primary">New Opportunities.</span>
           </motion.h1>
-          <motion.p variants={heroItem} className="mt-5 max-w-lg text-[15px] leading-relaxed text-hero-body md:text-base">
-            <strong className="text-foreground">Where Your Credit Becomes a Real Asset.</strong> Access monthly income
-            opportunities and advances up to $2,500.
+          <motion.p variants={heroItem} className="mt-4 max-w-lg text-[15px] leading-relaxed text-muted-foreground md:text-base">
+            Put your excellent credit profile to work. Explore monthly income opportunities and advances up to $2,500.
           </motion.p>
 
-          {/* Fila de estadísticas con separadores */}
-          <motion.dl variants={heroItem} className="mt-7 grid max-w-md grid-cols-3 divide-x divide-border">
-            {HERO_STATS.map((s) => (
-              <div key={s.label} className="px-3 first:pl-0">
+          <motion.div variants={heroItem} className="mt-5">
+            <CtaButton glow shape="square">Start Quick Credit Verification</CtaButton>
+          </motion.div>
+
+          <motion.dl variants={heroItem} className="mt-6 grid max-w-md grid-cols-3 gap-3">
+            {HERO_STATS.map((s, index) => (
+              <div key={s.label}>
                 <dt className="sr-only">{s.label}</dt>
-                <dd className="font-serif text-2xl font-bold text-foreground md:text-[1.9rem]">{s.value}</dd>
-                <dd className="mt-1 text-[10px] uppercase tracking-wider text-hero-muted md:text-[11px]">{s.label}</dd>
+                <dd className="relative w-fit overflow-hidden font-heading text-xl font-extrabold text-foreground md:text-2xl">
+                  <motion.span
+                    aria-hidden="true"
+                    initial={{ x: "-105%" }}
+                    animate={{ x: "110%" }}
+                    transition={{
+                      duration: 0.55,
+                      delay: 0.2 + index * 0.2,
+                      ease: [0.65, 0, 0.35, 1],
+                    }}
+                    className="absolute inset-0 z-10 bg-primary"
+                  />
+                  <motion.span
+                    initial={{ opacity: 0, x: -8 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.3, delay: 0.65 + index * 0.2 }}
+                    className="inline-block"
+                  >
+                    {s.value}
+                  </motion.span>
+                </dd>
+                <dd className="mt-1 text-xs text-muted-foreground">{s.label}</dd>
               </div>
             ))}
           </motion.dl>
-
-          <motion.div variants={heroItem} className="mt-8">
-            <CtaButton glow shape="square">Start Quick Credit Verification</CtaButton>
-          </motion.div>
         </motion.div>
 
-        {/* Columna derecha: imagen recortada integrada al fondo de color */}
-        <div className="relative flex min-h-[420px] items-end justify-center bg-hero-panel pt-10 lg:bg-transparent lg:pt-24">
-          {/* Anillos decorativos sutiles */}
-          <div className="pointer-events-none absolute left-1/2 top-1/2 h-72 w-72 -translate-x-1/2 -translate-y-1/2 rotate-12 rounded-[3rem] border-2 border-primary-foreground/15 lg:h-96 lg:w-96" />
-          <div className="pointer-events-none absolute left-1/2 top-1/2 h-52 w-52 -translate-x-1/2 -translate-y-1/2 rotate-12 rounded-[2.5rem] border-2 border-primary-foreground/10 lg:h-72 lg:w-72" />
-
+        <div className="relative flex min-h-[290px] items-end justify-center bg-[#59c5a4] px-3 pt-6 sm:min-h-[350px] lg:min-h-0 lg:bg-transparent lg:px-0 lg:pt-8">
+          <div className="pointer-events-none absolute left-1/2 top-1/2 h-56 w-56 -translate-x-1/2 -translate-y-1/2 rotate-12 rounded-[3rem] border-[12px] border-white/10 sm:h-72 sm:w-72 lg:h-[22rem] lg:w-[22rem]" />
           <motion.img
-            src={heroCutout}
-            alt="Business professional in suit and glasses"
-            width={896}
-            height={1120}
+            src="/images/chica.png"
+            alt="Smiling professional woman presenting credit opportunities"
+            width={1024}
+            height={768}
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative h-[380px] w-auto origin-bottom object-contain lg:h-[78%]"
+            className="relative max-h-[380px] w-full max-w-[560px] object-contain object-bottom lg:max-h-[440px]"
           />
 
-          {/* Flotante 1: tarjeta "Verified 100%" que sobresale a la derecha */}
-          <motion.div {...popIn(0.6)} className="absolute right-3 top-[20%] lg:right-8">
-            <div className="flex animate-float items-center gap-3 rounded-xl bg-background px-4 py-3 shadow-lift">
+          <motion.div {...popIn(0.8)} className="absolute left-3 top-[54%] sm:left-6">
+            <div className="flex animate-float items-center gap-2 rounded-xl bg-white px-3 py-2.5 shadow-lift">
+              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                <ShieldCheck className="h-4 w-4" />
+              </span>
+              <div>
+                <p className="text-[11px] text-muted-foreground">Credit score</p>
+                <p className="font-heading text-sm font-extrabold text-foreground">680+ verified</p>
+              </div>
+            </div>
+          </motion.div>
+
+          <motion.div {...popIn(1)} className="absolute right-3 top-[14%] sm:right-6">
+            <div className="flex animate-float-reverse items-center gap-2 rounded-xl bg-white px-3 py-2.5 shadow-lift">
+              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                <Lock className="h-4 w-4" />
+              </span>
+              <div>
+                <p className="text-[11px] text-muted-foreground">Privacy first</p>
+                <p className="font-heading text-sm font-extrabold text-foreground">Your consent matters</p>
+              </div>
+            </div>
+          </motion.div>
+
+          <motion.div {...popIn(1.2)} className="absolute left-3 top-[8%] sm:left-6">
+            <div className="flex animate-float items-center gap-2 rounded-xl bg-white px-3 py-2.5 shadow-lift">
+              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                <Award className="h-4 w-4" />
+              </span>
+              <div>
+                <p className="text-[11px] text-muted-foreground">Personalized</p>
+                <p className="font-heading text-sm font-extrabold text-foreground">Profile matching</p>
+              </div>
+            </div>
+          </motion.div>
+
+          <motion.div {...popIn(0.6)} className="absolute bottom-10 right-4 sm:right-8 lg:bottom-14 lg:right-3">
+            <div className="flex animate-float-reverse items-center gap-2.5 rounded-xl bg-white px-3.5 py-2.5 shadow-lift sm:px-4">
               <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10 text-primary">
                 <TrendingUp className="h-5 w-5" />
               </span>
               <div>
-                <p className="text-[11px] uppercase tracking-wider text-hero-muted">Verified</p>
-                <p className="font-serif text-xl font-bold text-foreground">100%</p>
+                <p className="text-xs text-muted-foreground">Monthly opportunities</p>
+                <p className="font-heading text-base font-extrabold text-foreground">Up to $2,500</p>
               </div>
-            </div>
-          </motion.div>
-
-          {/* Flotante 2: insignia circular blanca con check */}
-          <motion.div {...popIn(0.8)} className="absolute bottom-[25%] left-3 lg:-left-4">
-            <div className="flex h-[50px] w-[50px] animate-float-reverse items-center justify-center rounded-full bg-background text-primary shadow-lift">
-              <ShieldCheck className="h-6 w-6" />
             </div>
           </motion.div>
         </div>
       </div>
+    </section>
+  );
+}
+
+function HeroFeatureCards() {
+  return (
+    <section className="relative z-10 mx-auto -mt-1 grid max-w-7xl gap-3 px-5 pb-12 sm:grid-cols-3 md:px-8 lg:-mt-8 lg:pb-16">
+      {HERO_FEATURES.map(({ Icon, title, description }, index) => (
+        <Reveal
+          key={title}
+          delay={index * 0.1}
+          className="rounded-xl border border-border/70 bg-background p-5 shadow-lift transition-transform duration-300 hover:-translate-y-1 sm:p-6"
+        >
+          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
+            <Icon className="h-5 w-5" strokeWidth={1.8} />
+          </div>
+          <h2 className="mt-4 text-lg font-bold text-foreground">{title}</h2>
+          <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{description}</p>
+        </Reveal>
+      ))}
     </section>
   );
 }
@@ -188,7 +271,7 @@ function AssetSection() {
           {/* Tarjeta flotante superpuesta */}
           <div className="absolute -bottom-8 right-4 max-w-[15rem] bg-navy p-6 text-navy-foreground shadow-lift transition-transform duration-300 hover:-translate-y-1 md:-right-8">
             <p className="text-xs uppercase tracking-[0.2em] opacity-75">Access advances</p>
-            <p className="mt-2 font-serif text-4xl font-bold">up to $2,500</p>
+            <p className="mt-2 font-heading text-4xl font-bold">up to $2,500</p>
           </div>
         </Reveal>
         <div className="lg:col-span-5 lg:col-start-8">
@@ -197,7 +280,7 @@ function AssetSection() {
             <h2 className="mt-4 text-3xl leading-tight font-bold text-foreground md:text-5xl">
               Your Credit History Is an Underutilized Asset
             </h2>
-            <p className="mt-6 text-lg leading-relaxed text-muted-foreground first-letter:float-left first-letter:mr-2 first-letter:font-serif first-letter:text-6xl first-letter:leading-none first-letter:text-foreground">
+            <p className="mt-6 text-lg leading-relaxed text-muted-foreground first-letter:float-left first-letter:mr-2 first-letter:font-heading first-letter:text-6xl first-letter:leading-none first-letter:text-foreground">
               You spent years building and maintaining an excellent credit history. But right now, what is that credit
               actually doing for you? Traditional financial systems only reward you when you borrow. It is time to
               change the equation.
@@ -229,7 +312,7 @@ function ProcessSection() {
         <div className="mt-16 grid gap-px bg-border md:grid-cols-3">
           {STEPS.map((s, i) => (
             <Reveal key={s.n} delay={i * 0.12} className="group relative overflow-hidden bg-background p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-lift md:p-10">
-              <span className="pointer-events-none absolute -right-2 -top-6 font-serif text-[9rem] leading-none font-bold text-ghost-number">
+              <span className="pointer-events-none absolute -right-2 -top-6 font-heading text-[9rem] leading-none font-bold text-ghost-number">
                 {s.n}
               </span>
               <div className="relative">
@@ -303,7 +386,7 @@ function Footer() {
     <footer className="border-t bg-background py-12">
       <div className="mx-auto max-w-7xl px-5 md:px-8">
         <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
-          <img src={logo.url} alt="Credit Partner Pro" className="h-10 w-auto" />
+          <img src="/images/credit-partner-logo.png" alt="Credit Partner Pro" className="w-[200px] object-contain" />
           <nav className="flex gap-6 text-sm text-foreground">
             <a href="#" className="hover:text-primary">Privacy Policy</a>
             <a href="#" className="hover:text-primary">Terms</a>

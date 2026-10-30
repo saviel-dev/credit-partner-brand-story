@@ -22,7 +22,19 @@ export function Reveal({ children, delay = 0, ...rest }: HTMLMotionProps<"div"> 
 }
 
 // Botón CTA con elevación y flecha animada al hover; "glow" añade sombra verde
-export function CtaButton({ children, size = "lg", glow = false, shape = "pill" }: { children: ReactNode; size?: "sm" | "lg"; glow?: boolean; shape?: "pill" | "square" }) {
+export function CtaButton({
+  children,
+  size = "lg",
+  glow = false,
+  shape = "pill",
+  className = "",
+}: {
+  children: ReactNode;
+  size?: "sm" | "lg";
+  glow?: boolean;
+  shape?: "pill" | "square";
+  className?: string;
+}) {
   const sizing = size === "lg" ? "px-7 py-4 text-base" : "px-5 py-2.5 text-sm";
   const radius = shape === "square" ? "rounded-lg px-7 py-3.5 text-[15px]" : `rounded-[30px] ${sizing}`;
   const shadow = glow ? "shadow-cta hover:shadow-cta-hover" : "hover:shadow-lift";
@@ -31,7 +43,7 @@ export function CtaButton({ children, size = "lg", glow = false, shape = "pill" 
       href={CALENDLY_URL}
       target="_blank"
       rel="noopener noreferrer"
-      className={`group inline-flex items-center gap-2 bg-primary font-semibold text-primary-foreground transition-all duration-300 hover:-translate-y-0.5 ${shadow} ${radius}`}
+      className={`group inline-flex items-center gap-2 bg-primary font-semibold text-primary-foreground transition-all duration-300 hover:-translate-y-0.5 ${shadow} ${radius} ${className}`}
     >
       {children}
       <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />

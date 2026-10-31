@@ -3,6 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { Lock, ShieldCheck, Award, TrendingUp } from "lucide-react";
+import heroPresenter from "@/assets/hero-presenter.png";
 import { CtaButton, Reveal } from "@/components/landing/shared";
 
 // Imágenes de Unsplash para las demás secciones
@@ -69,6 +70,7 @@ function Index() {
       <TrustSection />
       <FinalCta />
       <Footer />
+      <div aria-hidden="true" className="page-entry-blur pointer-events-none fixed inset-0 z-[100]" />
     </div>
   );
 }
@@ -190,8 +192,8 @@ function Hero() {
         <div className="relative flex min-h-[290px] items-end justify-center bg-[#59c5a4] px-3 pt-6 sm:min-h-[350px] lg:min-h-0 lg:bg-transparent lg:px-0 lg:pt-8">
           <div className="pointer-events-none absolute left-1/2 top-1/2 h-56 w-56 -translate-x-1/2 -translate-y-1/2 rotate-12 rounded-[3rem] border-[12px] border-white/10 sm:h-72 sm:w-72 lg:h-[22rem] lg:w-[22rem]" />
           <motion.img
-            src="/images/chica.png"
-            alt="Smiling professional woman presenting credit opportunities"
+            src={heroPresenter}
+            alt="Smiling professional man presenting credit opportunities"
             width={1024}
             height={768}
             initial={{ opacity: 0, scale: 0.9 }}
@@ -200,7 +202,7 @@ function Hero() {
             className="relative max-h-[380px] w-full max-w-[560px] object-contain object-bottom lg:max-h-[440px]"
           />
 
-          <motion.div {...popIn(0.8)} className="absolute left-3 top-[54%] sm:left-6">
+          <motion.div {...popIn(0.8)} className="absolute left-3 top-[46%] sm:left-6">
             <div className="flex animate-float items-center gap-2 rounded-xl bg-white px-3 py-2.5 shadow-lift">
               <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary">
                 <ShieldCheck className="h-4 w-4" />
@@ -211,20 +213,7 @@ function Hero() {
               </div>
             </div>
           </motion.div>
-
-          <motion.div {...popIn(1)} className="absolute right-3 top-[14%] sm:right-6">
-            <div className="flex animate-float-reverse items-center gap-2 rounded-xl bg-white px-3 py-2.5 shadow-lift">
-              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary">
-                <Lock className="h-4 w-4" />
-              </span>
-              <div>
-                <p className="text-[11px] text-muted-foreground">Privacy first</p>
-                <p className="font-heading text-sm font-extrabold text-foreground">Your consent matters</p>
-              </div>
-            </div>
-          </motion.div>
-
-          <motion.div {...popIn(1.2)} className="absolute left-3 top-[8%] sm:left-6">
+          <motion.div {...popIn(1.2)} className="absolute left-6 top-[8%] sm:left-9">
             <div className="flex animate-float items-center gap-2 rounded-xl bg-white px-3 py-2.5 shadow-lift">
               <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary">
                 <Award className="h-4 w-4" />
@@ -236,7 +225,7 @@ function Hero() {
             </div>
           </motion.div>
 
-          <motion.div {...popIn(0.6)} className="absolute bottom-10 right-4 sm:right-8 lg:bottom-14 lg:right-3">
+          <motion.div {...popIn(0.6)} className="absolute bottom-14 right-4 sm:right-8 lg:bottom-18 lg:right-3">
             <div className="flex animate-float-reverse items-center gap-2.5 rounded-xl bg-white px-3.5 py-2.5 shadow-lift sm:px-4">
               <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10 text-primary">
                 <TrendingUp className="h-5 w-5" />

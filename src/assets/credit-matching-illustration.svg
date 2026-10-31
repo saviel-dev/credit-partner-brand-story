@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="600" viewBox="0 0 720 600" fill="none">
+  <rect width="720" height="600" rx="36" fill="#EAF7F3"/>
+  <circle cx="602" cy="112" r="118" fill="#D5F0E7"/>
+  <circle cx="102" cy="502" r="132" fill="#D9F1E9"/>
+  <path d="M92 302C152 302 151 215 214 215" stroke="#92D5BD" stroke-width="4" stroke-dasharray="8 10"/>
+  <path d="M506 215C568 215 568 302 628 302" stroke="#92D5BD" stroke-width="4" stroke-dasharray="8 10"/>
+  <path d="M198 205L214 215L198 225" stroke="#159273" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M522 205L506 215L522 225" stroke="#159273" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <rect x="34" y="249" width="174" height="142" rx="20" fill="white"/>
+  <rect x="34.75" y="249.75" width="172.5" height="140.5" rx="19.25" stroke="#D8E9E3" stroke-width="1.5"/>
+  <rect x="54" y="269" width="42" height="42" rx="13" fill="#DDF3EB"/>
+  <path d="M75 277L85 281V289C85 296 80.5 300 75 303C69.5 300 65 296 65 289V281L75 277Z" stroke="#128468" stroke-width="2.5" stroke-linejoin="round"/>
+  <path d="M71 289L74 292L80 285" stroke="#128468" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="54" y="324" width="110" height="9" rx="4.5" fill="#0B5673"/>
+  <rect x="54" y="343" width="132" height="7" rx="3.5" fill="#C5D6D1"/>
+  <rect x="54" y="359" width="92" height="7" rx="3.5" fill="#D8E5E1"/>
+
+  <rect x="512" y="249" width="174" height="142" rx="20" fill="white"/>
+  <rect x="512.75" y="249.75" width="172.5" height="140.5" rx="19.25" stroke="#D8E9E3" stroke-width="1.5"/>
+  <rect x="532" y="269" width="42" height="42" rx="13" fill="#E4F0FF"/>
+  <path d="M553 276C547.5 276 543 280.5 543 286C543 291.5 547.5 296 553 296C558.5 296 563 291.5 563 286C563 280.5 558.5 276 553 276Z" stroke="#1683C5" stroke-width="2.5"/>
+  <path d="M538 306C540 299 545.5 296 553 296C560.5 296 566 299 568 306" stroke="#1683C5" stroke-width="2.5" stroke-linecap="round"/>
+  <rect x="532" y="324" width="110" height="9" rx="4.5" fill="#0B5673"/>
+  <rect x="532" y="343" width="132" height="7" rx="3.5" fill="#C5D6D1"/>
+  <rect x="532" y="359" width="92" height="7" rx="3.5" fill="#D8E5E1"/>
+
+  <rect x="211" y="112" width="298" height="366" rx="30" fill="#0B5673"/>
+  <rect x="221" y="122" width="278" height="346" rx="23" fill="white"/>
+  <rect x="243" y="145" width="52" height="52" rx="16" fill="#E1F4ED"/>
+  <circle cx="269" cy="162" r="9" stroke="#128468" stroke-width="2.5"/>
+  <path d="M253 187C255 177 261 172 269 172C277 172 283 177 285 187" stroke="#128468" stroke-width="2.5" stroke-linecap="round"/>
+  <rect x="310" y="153" width="145" height="10" rx="5" fill="#0B5673"/>
+  <rect x="310" y="174" width="112" height="8" rx="4" fill="#C5D6D1"/>
+  <text x="243" y="239" fill="#58716B" font-family="Arial, sans-serif" font-size="14" font-weight="700" letter-spacing="1.2">CREDIT PROFILE</text>
+  <text x="243" y="301" fill="#0B5673" font-family="Arial, sans-serif" font-size="58" font-weight="700">680<tspan fill="#159273">+</tspan></text>
+  <rect x="243" y="323" width="222" height="9" rx="4.5" fill="#E5EFEB"/>
+  <rect x="243" y="323" width="170" height="9" rx="4.5" fill="#24A984"/>
+  <rect x="243" y="354" width="102" height="35" rx="17.5" fill="#EAF7F3"/>
+  <circle cx="261" cy="371.5" r="5" fill="#159273"/>
+  <rect x="275" y="367" width="57" height="9" rx="4.5" fill="#76BFA8"/>
+  <path d="M243 421H465" stroke="#E4ECE9" stroke-width="2"/>
+  <rect x="243" y="438" width="133" height="8" rx="4" fill="#C5D6D1"/>
+
+  <rect x="274" y="510" width="172" height="48" rx="24" fill="white"/>
+  <circle cx="300" cy="534" r="9" fill="#24A984"/>
+  <path d="M296 534L299 537L305 530" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="318" y="530" width="105" height="8" rx="4" fill="#0B5673"/>
+</svg>

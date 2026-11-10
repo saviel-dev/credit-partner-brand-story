@@ -30,3 +30,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Project planning documents
+Lista de tareas.md
+Plan de Implementación — Credit Partner Pro Landing.md

@@ -132,18 +132,22 @@
   --sidebar-ring: oklch(0.551 0.027 264.364);
 }
 
-/* Paleta de marca Credit Partner Pro (verde #128160, azul #055475) */
+/* Paleta Credit Partner Pro basada en el plan de implementación. */
 :root {
   --background: oklch(1 0 0);
-  --foreground: oklch(0.42 0.085 230);
-  --primary: oklch(0.53 0.1 170);
+  --foreground: oklch(0.3345 0.0089 248.1);
+  --primary: oklch(0.5467 0.1159 162.49);
   --primary-foreground: oklch(1 0 0);
-  --navy: oklch(0.42 0.085 230);
+  --navy: oklch(0.4032 0.0787 233.2);
   --navy-foreground: oklch(1 0 0);
-  --muted: oklch(0.982 0.002 248);
+  --muted: oklch(0.96 0.006 248);
   --muted-foreground: oklch(0.55 0.02 240);
   --ghost-number: oklch(0.955 0 0);
-  --border: oklch(0.9 0.01 230);
+  --border: oklch(0.9 0.01 248);
+  --silver-slate-start: oklch(0.9256 0.0087 247.92);
+  --silver-slate-end: oklch(0.9842 0.0034 247.86);
+  --disclosure: oklch(0.9869 0.0214 95.28);
+  --disclosure-border: oklch(0.6658 0.1574 58.32);
   --shadow-lift: 0 18px 40px -18px color-mix(in oklab, var(--navy) 35%, transparent);
 }
 
@@ -151,10 +155,14 @@
   --color-navy: var(--navy);
   --color-navy-foreground: var(--navy-foreground);
   --color-ghost-number: var(--ghost-number);
-  --font-serif: "Playfair Display", Georgia, serif;
-  --font-sans: "Plus Jakarta Sans", system-ui, sans-serif;
-  --font-hero: "Oswald", "Arial Narrow", sans-serif;
-  --font-heading: "Plus Jakarta Sans", system-ui, sans-serif;
+  --color-silver-slate-start: var(--silver-slate-start);
+  --color-silver-slate-end: var(--silver-slate-end);
+  --color-disclosure: var(--disclosure);
+  --color-disclosure-border: var(--disclosure-border);
+  --font-serif: "Inter", Arial, sans-serif;
+  --font-sans: "Inter", Arial, sans-serif;
+  --font-hero: "Inter", Arial, sans-serif;
+  --font-heading: "Inter", Arial, sans-serif;
   --shadow-lift: var(--shadow-lift);
 }
 

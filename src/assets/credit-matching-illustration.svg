@@ -33,7 +33,7 @@
   <rect x="310" y="153" width="145" height="10" rx="5" fill="#0B5673"/>
   <rect x="310" y="174" width="112" height="8" rx="4" fill="#C5D6D1"/>
   <text x="243" y="239" fill="#58716B" font-family="Arial, sans-serif" font-size="14" font-weight="700" letter-spacing="1.2">CREDIT PROFILE</text>
-  <text x="243" y="301" fill="#0B5673" font-family="Arial, sans-serif" font-size="58" font-weight="700">680<tspan fill="#159273">+</tspan></text>
+  <text x="243" y="301" fill="#0B5673" font-family="Arial, sans-serif" font-size="25" font-weight="700" textLength="222" lengthAdjust="spacingAndGlyphs">EXCELLENT OR GREAT</text>
   <rect x="243" y="323" width="222" height="9" rx="4.5" fill="#E5EFEB"/>
   <rect x="243" y="323" width="170" height="9" rx="4.5" fill="#24A984"/>
   <rect x="243" y="354" width="102" height="35" rx="17.5" fill="#EAF7F3"/>

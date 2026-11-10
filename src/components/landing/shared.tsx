@@ -2,9 +2,9 @@
 import { motion, type HTMLMotionProps } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import type { ReactNode } from "react";
+import { CPP_LINKS } from "@/config/cpp-links";
 
-// Enlace de agenda en Calendly usado por todos los botones
-export const CALENDLY_URL = "https://calendly.com/creditpartnerpr0/appointment";
+export const CALENDLY_URL = CPP_LINKS.welcomeCall;
 
 // Contenedor con efecto fade-up al entrar en pantalla
 export function Reveal({ children, delay = 0, ...rest }: HTMLMotionProps<"div"> & { delay?: number }) {
@@ -40,7 +40,7 @@ export function CtaButton({
   const shadow = glow ? "shadow-cta hover:shadow-cta-hover" : "hover:shadow-lift";
   return (
     <a
-      href={CALENDLY_URL}
+      href={CPP_LINKS.quickCreditVerification}
       target="_blank"
       rel="noopener noreferrer"
       className={`group inline-flex items-center gap-2 bg-primary font-semibold text-primary-foreground transition-all duration-300 hover:-translate-y-0.5 ${shadow} ${radius} ${className}`}

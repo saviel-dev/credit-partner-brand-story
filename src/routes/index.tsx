@@ -1,9 +1,10 @@
 // Landing page "Magazine Editorial Premium" de Credit Partner Pro
 import { createFileRoute } from "@tanstack/react-router";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import {
   Award,
+  ArrowUp,
   Building2,
   CheckCircle2,
   FileText,
@@ -85,8 +86,43 @@ function Index() {
       <TrustSection />
       <FinalCta />
       <Footer />
-      <div aria-hidden="true" className="page-entry-blur pointer-events-none fixed inset-0 z-[100]" />
+      <BackToTopButton />
+      <div
+        aria-hidden="true"
+        className="page-entry-blur pointer-events-none fixed inset-0 z-[100]"
+      />
     </div>
+  );
+}
+
+function BackToTopButton() {
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const updateVisibility = () => setVisible(window.scrollY > 400);
+    updateVisibility();
+    window.addEventListener("scroll", updateVisibility, { passive: true });
+    return () => window.removeEventListener("scroll", updateVisibility);
+  }, []);
+
+  return (
+    <AnimatePresence>
+      {visible && (
+        <motion.button
+          type="button"
+          aria-label="Volver arriba"
+          title="Volver arriba"
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          initial={{ opacity: 0, y: 12, scale: 0.9 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: 12, scale: 0.9 }}
+          transition={{ duration: 0.2 }}
+          className="fixed bottom-5 right-5 z-40 flex h-12 w-12 cursor-pointer items-center justify-center rounded-full bg-primary text-primary-foreground shadow-cta transition-colors hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+        >
+          <ArrowUp className="h-5 w-5" aria-hidden="true" />
+        </motion.button>
+      )}
+    </AnimatePresence>
   );
 }
 
@@ -190,15 +226,23 @@ function Hero() {
             <span className="block whitespace-nowrap">with Established</span>
             <span className="block whitespace-nowrap">Entrepreneurs</span>
           </motion.h1>
-          <motion.p variants={heroItem} className="mt-4 max-w-lg font-heading text-sm font-bold leading-relaxed text-foreground md:text-base">
+          <motion.p
+            variants={heroItem}
+            className="mt-4 max-w-lg font-heading text-sm font-bold leading-relaxed text-foreground md:text-base"
+          >
             {CPP_COPY.hero.preHeadline}
           </motion.p>
-          <motion.p variants={heroItem} className="mt-4 max-w-lg text-[15px] leading-relaxed text-muted-foreground md:text-base">
+          <motion.p
+            variants={heroItem}
+            className="mt-4 max-w-lg text-[15px] leading-relaxed text-muted-foreground md:text-base"
+          >
             {CPP_COPY.hero.subheadline} {CPP_COPY.hero.riskDisclosure}
           </motion.p>
 
           <motion.div variants={heroItem} className="mt-5">
-            <CtaButton glow shape="square">{CPP_COPY.hero.cta}</CtaButton>
+            <CtaButton glow shape="square">
+              {CPP_COPY.hero.cta}
+            </CtaButton>
           </motion.div>
 
           <motion.dl variants={heroItem} className="mt-6 grid max-w-md grid-cols-3 gap-3">
@@ -252,7 +296,9 @@ function Hero() {
               </span>
               <div>
                 <p className="text-[11px] text-muted-foreground">Credit profile</p>
-                <p className="font-heading text-sm font-extrabold text-foreground">Excellent or Great</p>
+                <p className="font-heading text-sm font-extrabold text-foreground">
+                  Excellent or Great
+                </p>
               </div>
             </div>
           </motion.div>
@@ -263,19 +309,26 @@ function Hero() {
               </span>
               <div>
                 <p className="text-[11px] text-muted-foreground">Personalized</p>
-                <p className="font-heading text-sm font-extrabold text-foreground">Profile matching</p>
+                <p className="font-heading text-sm font-extrabold text-foreground">
+                  Profile matching
+                </p>
               </div>
             </div>
           </motion.div>
 
-          <motion.div {...popIn(0.6)} className="absolute bottom-14 right-4 sm:right-8 lg:bottom-18 lg:right-3">
+          <motion.div
+            {...popIn(0.6)}
+            className="absolute bottom-14 right-4 sm:right-8 lg:bottom-18 lg:right-3"
+          >
             <div className="flex animate-float-reverse items-center gap-2.5 rounded-xl bg-white px-3.5 py-2.5 shadow-lift sm:px-4">
               <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10 text-primary">
                 <TrendingUp className="h-5 w-5" />
               </span>
               <div>
                 <p className="text-xs text-muted-foreground">Monthly opportunities</p>
-                <p className="font-heading text-base font-extrabold text-foreground">Up to $2,500</p>
+                <p className="font-heading text-base font-extrabold text-foreground">
+                  Up to $2,500
+                </p>
               </div>
             </div>
           </motion.div>
@@ -284,7 +337,6 @@ function Hero() {
     </section>
   );
 }
-
 
 const heroCardsVariants = {
   hidden: {},
@@ -319,7 +371,9 @@ function HeroFeatureCards() {
           {/* Gradient top accent bar */}
           <div className={`absolute inset-x-0 top-0 h-[3px] bg-gradient-to-r ${accent}`} />
           <div className="flex items-center gap-3">
-            <div className={`inline-flex shrink-0 items-center justify-center rounded-xl bg-gradient-to-br p-2.5 ${accent}`}>
+            <div
+              className={`inline-flex shrink-0 items-center justify-center rounded-xl bg-gradient-to-br p-2.5 ${accent}`}
+            >
               <Icon className="h-5 w-5 text-white" strokeWidth={2} />
             </div>
             <h2 className="font-heading text-[1.15rem] font-extrabold leading-snug tracking-tight text-foreground">
@@ -327,12 +381,16 @@ function HeroFeatureCards() {
             </h2>
           </div>
           {/* Description */}
-          <p className="mt-2 font-sans text-[13px] leading-relaxed text-muted-foreground">{description}</p>
+          <p className="mt-2 font-sans text-[13px] leading-relaxed text-muted-foreground">
+            {description}
+          </p>
           {/* Divider */}
           <div className="my-4 h-px bg-border" />
           {/* Stat row */}
           <div className="flex items-baseline gap-1.5">
-            <span className={`bg-gradient-to-r bg-clip-text font-heading text-2xl font-extrabold tracking-tight text-transparent ${accent}`}>
+            <span
+              className={`bg-gradient-to-r bg-clip-text font-heading text-2xl font-extrabold tracking-tight text-transparent ${accent}`}
+            >
               {stat}
             </span>
             <span className="font-heading text-[10px] font-bold uppercase tracking-[0.16em] text-muted-foreground/60">
@@ -367,7 +425,10 @@ const assetItemVariants = {
 
 function AssetSection() {
   return (
-    <section id="the-asset" className="scroll-mt-20 relative overflow-hidden border-t bg-gradient-to-b from-muted/60 via-muted to-muted/30 py-12 md:scroll-mt-24 md:py-16">
+    <section
+      id="the-asset"
+      className="scroll-mt-20 relative overflow-hidden border-t bg-gradient-to-b from-muted/60 via-muted to-muted/30 py-12 md:scroll-mt-24 md:py-16"
+    >
       {/* Decoración de fondo ambiental sutil */}
       <div className="pointer-events-none absolute -left-48 top-1/3 h-96 w-96 rounded-full bg-primary/5 blur-3xl" />
       <div className="pointer-events-none absolute -right-48 bottom-10 h-96 w-96 rounded-full bg-navy/5 blur-3xl" />
@@ -418,7 +479,8 @@ function AssetSection() {
                 Up to <span className="text-primary">$2,500</span>
               </p>
               <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
-                Access initial program advances once your profile is verified, contracted, and matched. {CPP_COPY.hero.riskDisclosure}
+                Access initial program advances once your profile is verified, contracted, and
+                matched. {CPP_COPY.hero.riskDisclosure}
               </p>
             </motion.div>
           </div>
@@ -477,14 +539,19 @@ function AssetSection() {
                 <TrendingUp className="h-4 w-4" strokeWidth={2} />
               </div>
               <div>
-                <p className="font-heading text-sm font-bold text-foreground">Not Eligible at This Time</p>
+                <p className="font-heading text-sm font-bold text-foreground">
+                  Not Eligible at This Time
+                </p>
                 <p className="text-xs text-muted-foreground">{CPP_COPY.benefits.notEligible}</p>
               </div>
             </div>
           </motion.div>
 
           {/* Botón y micro prueba social */}
-          <motion.div variants={assetItemVariants} className="mt-5 flex flex-wrap items-center gap-4">
+          <motion.div
+            variants={assetItemVariants}
+            className="mt-5 flex flex-wrap items-center gap-4"
+          >
             <CtaButton size="sm" glow>
               {CPP_COPY.hero.cta}
             </CtaButton>
@@ -552,7 +619,10 @@ const processItemVariants = {
 
 function ProcessSection() {
   return (
-    <section id="process" className="scroll-mt-20 relative overflow-hidden border-t bg-gradient-to-br from-silver-slate-start to-silver-slate-end py-12 md:scroll-mt-24 md:py-16">
+    <section
+      id="process"
+      className="scroll-mt-20 relative overflow-hidden border-t bg-gradient-to-br from-silver-slate-start to-silver-slate-end py-12 md:scroll-mt-24 md:py-16"
+    >
       <div className="pointer-events-none absolute -right-32 top-0 h-80 w-80 rounded-full bg-primary/[0.06] blur-3xl" />
 
       <motion.div
@@ -589,7 +659,9 @@ function ProcessSection() {
                     className="group flex gap-4 rounded-2xl border border-border/70 bg-white p-4 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md sm:p-5"
                   >
                     <div className="flex shrink-0 flex-col items-center gap-2">
-                      <div className={`inline-flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br ${s.accent} shadow-sm`}>
+                      <div
+                        className={`inline-flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br ${s.accent} shadow-sm`}
+                      >
                         <Icon className="h-5 w-5 text-white" strokeWidth={2} />
                       </div>
                       <span className="font-heading text-[10px] font-bold tracking-[0.16em] text-muted-foreground">
@@ -612,7 +684,10 @@ function ProcessSection() {
               })}
             </div>
 
-            <motion.div variants={processItemVariants} className="mt-6 flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:gap-4">
+            <motion.div
+              variants={processItemVariants}
+              className="mt-6 flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:gap-4"
+            >
               <CtaButton size="sm" glow>
                 {CPP_COPY.hero.cta}
               </CtaButton>
@@ -635,8 +710,12 @@ function ProcessSection() {
               loading="lazy"
             />
             <div className="absolute bottom-4 left-4 rounded-xl border border-white/80 bg-white/95 px-4 py-3 shadow-lg backdrop-blur sm:bottom-6 sm:left-6">
-              <p className="font-heading text-[10px] font-bold uppercase tracking-[0.16em] text-muted-foreground">Quick Credit Verification</p>
-              <p className="mt-1 font-heading text-sm font-extrabold text-foreground">Eligibility comes first</p>
+              <p className="font-heading text-[10px] font-bold uppercase tracking-[0.16em] text-muted-foreground">
+                Quick Credit Verification
+              </p>
+              <p className="mt-1 font-heading text-sm font-extrabold text-foreground">
+                Eligibility comes first
+              </p>
             </div>
           </motion.div>
         </div>
@@ -725,9 +804,7 @@ function TrustSection() {
                 <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
                   Program Eligibility
                 </p>
-                <p className="font-heading text-sm font-bold text-foreground">
-                  Review eligibility
-                </p>
+                <p className="font-heading text-sm font-bold text-foreground">Review eligibility</p>
               </div>
             </div>
             <div className="flex items-center justify-center gap-2 rounded-xl border border-border/70 bg-white/90 px-4 py-3 text-center shadow-sm">
@@ -742,9 +819,7 @@ function TrustSection() {
                 <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
                   Protected Data
                 </p>
-                <p className="font-heading text-sm font-bold text-foreground">
-                  Read privacy terms
-                </p>
+                <p className="font-heading text-sm font-bold text-foreground">Read privacy terms</p>
               </div>
             </div>
           </div>
@@ -777,9 +852,7 @@ function TrustSection() {
                 <h3 className="mt-4 font-heading text-lg font-extrabold leading-snug tracking-tight text-foreground">
                   {t}
                 </h3>
-                <p className="mt-2 font-sans text-sm leading-relaxed text-foreground/80">
-                  {d}
-                </p>
+                <p className="mt-2 font-sans text-sm leading-relaxed text-foreground/80">{d}</p>
               </div>
               <div className="relative mt-auto flex items-center justify-between gap-3 border-t border-border/60 pt-4">
                 <span className="text-xs text-muted-foreground">{badge}</span>
@@ -828,7 +901,7 @@ function FinalCta() {
       {/* Halos de luz ambiental sutiles para tema blanco */}
       <div className="pointer-events-none absolute -top-32 -right-32 h-[420px] w-[420px] rounded-full bg-primary/[0.04] blur-3xl" />
       <div className="pointer-events-none absolute -bottom-32 -left-32 h-[420px] w-[420px] rounded-full bg-primary/[0.04] blur-3xl" />
-      
+
       {/* Anillos concéntricos decorativos sutiles */}
       <div className="pointer-events-none absolute right-10 top-1/2 -translate-y-1/2 h-[520px] w-[520px] rounded-full border border-primary/[0.06] -z-0 hidden md:block" />
       <div className="pointer-events-none absolute right-24 top-1/2 -translate-y-1/2 h-[380px] w-[380px] rounded-full border border-dashed border-primary/[0.07] -z-0 hidden md:block" />
@@ -842,7 +915,8 @@ function FinalCta() {
           </div>
 
           <h2 className="mt-4 font-hero text-3xl font-bold uppercase leading-[1.08] tracking-tight text-foreground sm:text-4xl md:text-5xl lg:text-[3.25rem]">
-            Put Your <span className="text-navy">Excellent Credit History</span> to Work with Established Entrepreneurs
+            Put Your <span className="text-navy">Excellent Credit History</span> to Work with
+            Established Entrepreneurs
           </h2>
 
           <p className="mt-5 max-w-xl font-sans text-base leading-relaxed text-muted-foreground sm:text-lg">
@@ -856,7 +930,10 @@ function FinalCta() {
                 <CheckCircle2 className="h-3.5 w-3.5" />
               </div>
               <span className="font-sans text-sm text-foreground/90">
-                <strong className="font-heading font-bold text-foreground">{CPP_COPY.benefits.highlights[0].title}</strong> {CPP_COPY.benefits.highlights[0].description}
+                <strong className="font-heading font-bold text-foreground">
+                  {CPP_COPY.benefits.highlights[0].title}
+                </strong>{" "}
+                {CPP_COPY.benefits.highlights[0].description}
               </span>
             </div>
 
@@ -865,7 +942,10 @@ function FinalCta() {
                 <CheckCircle2 className="h-3.5 w-3.5" />
               </div>
               <span className="font-sans text-sm text-foreground/90">
-                <strong className="font-heading font-bold text-foreground">{CPP_COPY.benefits.highlights[1].title}</strong> {CPP_COPY.benefits.highlights[1].description}
+                <strong className="font-heading font-bold text-foreground">
+                  {CPP_COPY.benefits.highlights[1].title}
+                </strong>{" "}
+                {CPP_COPY.benefits.highlights[1].description}
               </span>
             </div>
 
@@ -874,7 +954,10 @@ function FinalCta() {
                 <CheckCircle2 className="h-3.5 w-3.5" />
               </div>
               <span className="font-sans text-sm text-foreground/90">
-                <strong className="font-heading font-bold text-foreground">{CPP_COPY.benefits.highlights[2].title}</strong> {CPP_COPY.benefits.highlights[2].description}
+                <strong className="font-heading font-bold text-foreground">
+                  {CPP_COPY.benefits.highlights[2].title}
+                </strong>{" "}
+                {CPP_COPY.benefits.highlights[2].description}
               </span>
             </div>
           </div>
@@ -971,7 +1054,8 @@ function Footer() {
               />
             </a>
             <p className="mt-5 max-w-sm font-sans text-sm leading-relaxed text-white/75">
-              Credit Partner Pro operates as a business matchmaking service connecting credit partners with independent entrepreneurs.
+              Credit Partner Pro operates as a business matchmaking service connecting credit
+              partners with independent entrepreneurs.
             </p>
           </div>
 
@@ -1004,7 +1088,10 @@ function Footer() {
                 </a>
               </div>
               <div className="flex flex-col space-y-3">
-                <a href="mailto:Support@CreditPartnerPro.com" className="transition-colors hover:text-white">
+                <a
+                  href="mailto:Support@CreditPartnerPro.com"
+                  className="transition-colors hover:text-white"
+                >
                   Support
                 </a>
                 <a href={CPP_LINKS.ftcDisclosures} className="transition-colors hover:text-white">
@@ -1013,7 +1100,10 @@ function Footer() {
                 <a href={CPP_LINKS.privacyPolicy} className="transition-colors hover:text-white">
                   Privacy Policy
                 </a>
-                <a href={CPP_LINKS.disputeResolution} className="transition-colors hover:text-white">
+                <a
+                  href={CPP_LINKS.disputeResolution}
+                  className="transition-colors hover:text-white"
+                >
                   Dispute Resolution
                 </a>
                 <a href={CPP_LINKS.termsOfUse} className="transition-colors hover:text-white">
@@ -1030,13 +1120,19 @@ function Footer() {
             </h4>
             <ul className="mt-5 space-y-3.5 font-sans text-sm font-medium text-white/75">
               <li>
-                <a href="tel:+17203102748" className="flex items-center gap-3 transition-colors hover:text-white">
+                <a
+                  href="tel:+17203102748"
+                  className="flex items-center gap-3 transition-colors hover:text-white"
+                >
                   <Phone className="h-4 w-4 shrink-0 text-white" />
                   <span>(720) 310-2748</span>
                 </a>
               </li>
               <li>
-                <a href="mailto:Support@CreditPartnerPro.com" className="flex items-center gap-3 transition-colors hover:text-white">
+                <a
+                  href="mailto:Support@CreditPartnerPro.com"
+                  className="flex items-center gap-3 transition-colors hover:text-white"
+                >
                   <Mail className="h-4 w-4 shrink-0 text-white" />
                   <span>Support@CreditPartnerPro.com</span>
                 </a>
@@ -1044,7 +1140,8 @@ function Footer() {
               <li className="flex items-start gap-3">
                 <Building2 className="mt-0.5 h-4 w-4 shrink-0 text-white" />
                 <span>
-                  5500 Greenwood Plaza Blvd, Suite 130<br />
+                  5500 Greenwood Plaza Blvd, Suite 130
+                  <br />
                   Greenwood Village, CO 80111
                 </span>
               </li>

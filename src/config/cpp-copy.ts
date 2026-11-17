@@ -19,34 +19,28 @@ export const CPP_COPY = {
     eyebrow: "HOW TO BECOME A CREDIT PARTNER",
     h2: "Complete Your 3-Step Sign-Up Process",
     intro:
-      "Follow our streamlined onboarding sequence below. Every applicant must complete the Quick Credit Verification first, electronically sign the program agreement, and book their welcome call.",
+      "The sign-up process consists of three steps: a Quick Credit Verification, electronic signing of the program agreement, and a welcome call.",
     steps: [
       {
         number: "01",
         badge: "STEP 1 — MANDATORY FIRST STEP",
         title: "Quick Credit Verification",
         description:
-          "Confirm your Excellent or Great credit profile through our encrypted portal. This soft verification does not impact your credit score and requires no SSN or passwords.",
-        actionLabel: "START STEP 1: QUICK CREDIT VERIFICATION",
-        hasAction: true,
+          "The Quick Credit Verification confirms your Excellent or Great credit profile through our encrypted portal. This soft verification does not impact your credit score and requires no SSN or passwords.",
       },
       {
         number: "02",
         badge: "STEP 2 — CONTRACTUAL PROTECTION",
-        title: "E-Sign Your Credit Partner Agreement",
+        title: "Credit Partner Agreement",
         description:
-          "Review and electronically sign the formal Credit Partner Pro agreement outlining strict contractual protections, program terms, and your rights as a partner.",
-        statusInfo: "Unlocked immediately after completing Step 1 (QCV).",
-        hasAction: false,
+          "The formal Credit Partner Pro agreement outlines program terms, partner rights, and the contractual protections associated with participation.",
       },
       {
         number: "03",
         badge: "STEP 3 — FINAL ONBOARDING",
-        title: "Book Your Welcome Call",
+        title: "Welcome Call",
         description:
-          "Once your credit verification and e-signature are complete, select a convenient date and time for a 15-minute welcome call with our onboarding team to finalize your profile.",
-        actionLabel: "BOOK YOUR WELCOME CALL",
-        hasAction: true,
+          "After credit verification and e-signature are complete, the onboarding team will help finalize your profile during a 15-minute welcome call.",
       },
     ],
   },

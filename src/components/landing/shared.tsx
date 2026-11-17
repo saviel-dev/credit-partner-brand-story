@@ -40,9 +40,7 @@ export function CtaButton({
   const shadow = glow ? "shadow-cta hover:shadow-cta-hover" : "hover:shadow-lift";
   return (
     <a
-      href={CPP_LINKS.quickCreditVerification}
-      target="_blank"
-      rel="noopener noreferrer"
+      href="#formulario"
       className={`group inline-flex items-center gap-2 bg-primary font-semibold text-primary-foreground transition-all duration-300 hover:-translate-y-0.5 ${shadow} ${radius} ${className}`}
     >
       {children}

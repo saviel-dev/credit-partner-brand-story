@@ -2,13 +2,27 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { Lock, ShieldCheck, Award, TrendingUp, Sparkles, CheckCircle2, Shield, Phone, Mail, Building2, ArrowRight } from "lucide-react";
+import {
+  Award,
+  Building2,
+  CheckCircle2,
+  FileText,
+  Info,
+  Lock,
+  Mail,
+  Phone,
+  ShieldCheck,
+  Sparkles,
+  TrendingUp,
+} from "lucide-react";
 import heroPresenter from "@/assets/hero-presenter.png";
 import creditMatchingIllustration from "@/assets/credit-matching-illustration.svg";
 import ctaProfessional from "@/assets/cta-professional.jpg";
 import footerLogo from "@/assets/logo blanco.png";
+import { FormstackEmbed } from "@/components/landing/formstack-embed";
 import { CALENDLY_URL, CtaButton, Reveal } from "@/components/landing/shared";
 import { CPP_COPY } from "@/config/cpp-copy";
+import { CPP_LINKS } from "@/config/cpp-links";
 
 // Imágenes de Unsplash para las demás secciones
 const DOCS_IMG =
@@ -67,6 +81,7 @@ function Index() {
       <HeroFeatureCards />
       <AssetSection />
       <ProcessSection />
+      <SignupFormSection />
       <TrustSection />
       <FinalCta />
       <Footer />
@@ -591,26 +606,6 @@ function ProcessSection() {
                       <span className="mt-2 inline-block font-heading text-[10px] font-bold uppercase tracking-[0.14em] text-primary">
                         {s.badge}
                       </span>
-                      {s.n === "01" && (
-                        <div>
-                          <CtaButton size="sm" glow className="mt-3 !rounded-md !px-3 !py-2 !text-xs">
-                            {CPP_COPY.process.steps[0].actionLabel}
-                          </CtaButton>
-                        </div>
-                      )}
-                      {s.n === "03" && (
-                        <div>
-                          <a
-                            href={CALENDLY_URL}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="group mt-3 inline-flex items-center gap-2 rounded-md bg-primary px-3 py-2 text-xs font-semibold text-primary-foreground shadow-cta transition-all duration-300 hover:-translate-y-0.5 hover:shadow-cta-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-                          >
-                            {CPP_COPY.process.steps[2].actionLabel}
-                            <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-                          </a>
-                        </div>
-                      )}
                     </div>
                   </motion.div>
                 );
@@ -649,6 +644,40 @@ function ProcessSection() {
     </section>
   );
 }
+
+function SignupFormSection() {
+  return (
+    <section
+      id="formulario"
+      className="relative isolate overflow-hidden scroll-mt-20 border-t bg-gradient-to-b from-muted/50 via-white to-white py-12 md:scroll-mt-24 md:py-16"
+    >
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -left-24 top-8 h-64 w-64 rounded-full border border-primary/10 bg-primary/[0.025]"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -bottom-28 -right-24 h-80 w-80 rounded-full border border-primary/10 bg-primary/[0.025]"
+      />
+      <Reveal
+        viewport={{ once: true, amount: 0.05, margin: "-40px" }}
+        className="relative z-10 mx-auto max-w-7xl px-5 md:px-8"
+      >
+        <div className="mx-auto max-w-3xl">
+          <div className="mb-6 text-center">
+            <h2 className="font-hero text-3xl font-bold uppercase leading-tight tracking-tight text-foreground sm:text-4xl">
+              Quick Credit <span className="text-primary">Verification</span>
+            </h2>
+            <div className="mx-auto mt-3 h-1 w-14 rounded-full bg-gradient-to-r from-primary/50 to-primary" />
+          </div>
+          <div className="overflow-hidden rounded-2xl border border-border/70 bg-white p-3 shadow-lift sm:p-6">
+            <FormstackEmbed />
+          </div>
+        </div>
+      </Reveal>
+    </section>
+  );
+}
 // 5. Confianza y seguridad: tarjetas institucionales elevadas con tipografías coherentes
 // 5. Confianza y seguridad: estética avanzada con objetos animados y certificación en vivo
 const TRUST = [
@@ -677,114 +706,84 @@ const TRUST = [
     d: `${CPP_COPY.benefits.approved} ${CPP_COPY.benefits.notEligible}`,
     badge: "Terms apply",
     techTag: "Disclosures",
-    accent: "from-navy/80 to-navy",
+    accent: "from-primary/70 to-primary/20",
   },
 ];
 
 function TrustSection() {
   return (
-    <section className="relative overflow-hidden border-t bg-gradient-to-b from-muted/50 via-muted to-muted/20 py-24 md:py-32">
-      {/* Objetos animados de fondo: Anillos concéntricos giratorios tipo radar de seguridad */}
-      <div className="pointer-events-none absolute left-1/2 top-1/2 h-[38rem] w-[38rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-primary/[0.07] animate-spin-slow" />
-      <div
-        className="pointer-events-none absolute left-1/2 top-1/2 h-[28rem] w-[28rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed border-primary/[0.08] animate-spin-slow"
-        style={{ animationDirection: "reverse", animationDuration: "90s" }}
-      />
-      <div className="pointer-events-none absolute left-1/2 top-1/2 h-[18rem] w-[18rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/[0.03] blur-3xl animate-pulse" />
-
-      {/* Halos de luz ambiental laterales */}
-      <div className="pointer-events-none absolute -left-48 top-1/3 h-96 w-96 rounded-full bg-primary/5 blur-3xl" />
-      <div className="pointer-events-none absolute -right-48 bottom-1/3 h-96 w-96 rounded-full bg-navy/5 blur-3xl" />
+    <section className="relative overflow-hidden border-t bg-gradient-to-b from-muted/70 via-muted/50 to-white py-16 md:py-24">
+      <div className="pointer-events-none absolute -left-24 top-20 h-72 w-72 rounded-full border border-primary/10 bg-primary/[0.025]" />
+      <div className="pointer-events-none absolute -right-24 bottom-20 h-96 w-96 rounded-full border border-primary/10 bg-primary/[0.025]" />
 
       <div className="relative mx-auto max-w-6xl px-5 md:px-8">
-        {/* Encabezado con widgets flotantes animados en los laterales */}
-        <div className="relative mx-auto max-w-3xl text-center">
-          {/* Widget flotante animado izquierda */}
-          <div className="hidden xl:flex animate-float absolute -top-4 -left-20 items-center gap-2.5 rounded-2xl border border-primary/20 bg-background/95 px-3.5 py-2 shadow-lift backdrop-blur-md">
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
-            </span>
-            <div className="text-left">
-              <p className="text-[9px] font-bold uppercase tracking-wider text-muted-foreground/70">Program Details</p>
-              <p className="font-heading text-xs font-extrabold text-foreground">Review eligibility</p>
+        <div className="mx-auto max-w-4xl">
+          <div className="mb-8 grid gap-3 sm:grid-cols-3">
+            <div className="flex items-center gap-3 rounded-xl border border-border/70 bg-white/90 px-4 py-3 shadow-sm">
+              <FileText className="h-5 w-5 shrink-0 text-primary" />
+              <div className="text-left">
+                <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+                  Program Eligibility
+                </p>
+                <p className="font-heading text-sm font-bold text-foreground">
+                  Review eligibility
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center justify-center gap-2 rounded-xl border border-border/70 bg-white/90 px-4 py-3 text-center shadow-sm">
+              <ShieldCheck className="h-5 w-5 shrink-0 text-primary" />
+              <p className="font-heading text-sm font-bold uppercase tracking-wide text-foreground">
+                Security & Privacy
+              </p>
+            </div>
+            <div className="flex items-center gap-3 rounded-xl border border-border/70 bg-white/90 px-4 py-3 shadow-sm">
+              <Lock className="h-5 w-5 shrink-0 text-primary" />
+              <div className="text-left">
+                <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+                  Protected Data
+                </p>
+                <p className="font-heading text-sm font-bold text-foreground">
+                  Read privacy terms
+                </p>
+              </div>
             </div>
           </div>
 
-          {/* Widget flotante animado derecha */}
-          <div className="hidden xl:flex animate-float-reverse absolute -top-4 -right-20 items-center gap-2.5 rounded-2xl border border-primary/20 bg-background/95 px-3.5 py-2 shadow-lift backdrop-blur-md">
-            <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-primary/10 text-primary">
-              <Shield className="h-3.5 w-3.5" />
-            </div>
-            <div className="text-left">
-              <p className="text-[9px] font-bold uppercase tracking-wider text-muted-foreground/70">Privacy Details</p>
-              <p className="font-heading text-xs font-extrabold text-foreground">Read privacy terms</p>
-            </div>
-          </div>
-
-          <Reveal>
-            <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-3.5 py-1 text-xs font-bold uppercase tracking-[0.2em] text-primary">
-              <Lock className="h-3.5 w-3.5" />
-              <span>Security & Privacy</span>
-            </div>
-
-            <h2 className="mt-4 font-hero text-3xl font-bold uppercase leading-[1.08] tracking-tight text-foreground sm:text-4xl md:text-5xl">
-              Program Terms <span className="text-primary">& Privacy</span>
+          <Reveal className="text-center">
+            <h2 className="font-hero text-3xl font-bold uppercase leading-[1.08] tracking-tight text-foreground sm:text-4xl md:text-5xl">
+              Program Terms &amp; <span className="text-primary">Privacy</span>
             </h2>
-
-            <p className="mt-4 font-sans text-base leading-relaxed text-muted-foreground sm:text-lg">
+            <p className="mx-auto mt-5 max-w-3xl text-justify font-sans text-base leading-relaxed text-muted-foreground sm:text-lg">
               {CPP_COPY.footer.riskEarnings}
             </p>
           </Reveal>
         </div>
 
-        {/* Tarjetas con objetos animados integrados */}
-        <div className="mt-14 grid gap-6 md:grid-cols-3">
+        <div className="mt-10 grid gap-5 md:grid-cols-3">
           {TRUST.map(({ Icon, tag, t, d, badge, techTag, accent }, i) => (
             <Reveal
               key={t}
               delay={i * 0.12}
-              className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-border/70 bg-background p-6 shadow-lift transition-all duration-300 hover:-translate-y-2 hover:shadow-xl sm:p-8"
+              className="relative flex h-full flex-col overflow-hidden rounded-2xl border border-border/70 bg-white p-6 shadow-sm transition-shadow duration-300 hover:shadow-md"
             >
-              {/* Barra superior de acento degradado */}
-              <div className={`absolute inset-x-0 top-0 h-[3px] bg-gradient-to-r ${accent}`} />
-
-              {/* Objeto animado en filigrana en el fondo de cada tarjeta */}
-              <Icon
-                className="pointer-events-none absolute -bottom-6 -right-6 h-32 w-32 text-foreground/[0.03] transition-all duration-500 group-hover:scale-110 group-hover:rotate-6 group-hover:text-primary/[0.08]"
-                strokeWidth={0.9}
-              />
-
+              <div className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${accent}`} />
               <div className="relative">
-                {/* Encabezado de la tarjeta y etiqueta informativa */}
-                <div className="flex items-center justify-between">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-primary/20 bg-gradient-to-br from-primary/15 to-primary/5 text-primary shadow-sm transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3">
-                    <Icon className="h-6 w-6" strokeWidth={1.8} />
-                  </div>
-                  <div className="flex items-center gap-1.5 rounded-full border border-border/80 bg-muted/80 px-3 py-1">
-                    <span className="font-heading text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
-                      {badge}
-                    </span>
-                  </div>
+                <div className="inline-flex items-center gap-2 rounded-full border border-border/70 bg-muted/60 px-3 py-1.5">
+                  <Icon className="h-4 w-4 shrink-0 text-primary" strokeWidth={1.8} />
+                  <span className="font-heading text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+                    {tag}
+                  </span>
                 </div>
-
-                {/* Título en tipografía font-heading extrabold */}
-                <h3 className="mt-5 font-heading text-lg font-extrabold leading-snug tracking-tight text-foreground">
+                <h3 className="mt-4 font-heading text-lg font-extrabold leading-snug tracking-tight text-foreground">
                   {t}
                 </h3>
-
-                {/* Descripción */}
-                <p className="mt-2.5 font-sans text-sm leading-relaxed text-muted-foreground">
+                <p className="mt-2 font-sans text-sm leading-relaxed text-foreground/80">
                   {d}
                 </p>
               </div>
-
-              {/* Pie de tarjeta con micro-etiquetas técnicas */}
-              <div className="relative mt-6 flex items-center justify-between border-t border-border/60 pt-4">
-                <span className="font-heading text-[11px] font-bold uppercase tracking-[0.14em] text-primary">
-                  {tag}
-                </span>
-                <span className="rounded bg-muted px-2 py-0.5 font-mono text-[10px] font-medium text-muted-foreground/75">
+              <div className="relative mt-auto flex items-center justify-between gap-3 border-t border-border/60 pt-4">
+                <span className="text-xs text-muted-foreground">{badge}</span>
+                <span className="rounded-full border border-border/70 bg-muted/40 px-3 py-1 font-heading text-[10px] font-semibold text-muted-foreground">
                   {techTag}
                 </span>
               </div>
@@ -792,30 +791,28 @@ function TrustSection() {
           ))}
         </div>
 
-        {/* Recordatorio para revisar condiciones antes de participar */}
-        <Reveal delay={0.25} className="mt-12 overflow-hidden rounded-2xl border border-border/70 bg-background/80 p-5 shadow-sm backdrop-blur-md">
-          <div className="mb-4 flex items-center justify-center gap-2 text-center">
-            <span className="font-heading text-xs font-extrabold uppercase tracking-widest text-primary">
-              Review program disclosures before participating
-            </span>
-          </div>
-
-          {/* 4 chips con efecto hover */}
-          <div className="grid grid-cols-2 gap-3 text-xs font-semibold text-muted-foreground sm:grid-cols-4">
-            <div className="flex items-center justify-center gap-2 rounded-xl border border-border/60 bg-muted/40 p-2.5 transition-all duration-300 hover:border-primary/40 hover:bg-background">
+        <Reveal
+          delay={0.25}
+          className="mt-8 rounded-2xl border border-border/70 bg-muted/60 p-5 shadow-sm sm:p-6"
+        >
+          <h3 className="mb-4 text-center font-heading text-xs font-extrabold uppercase tracking-widest text-primary">
+            Review program disclosures before participating
+          </h3>
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="flex items-center gap-2 rounded-full border border-border/60 bg-white/90 px-4 py-3 text-sm font-semibold text-muted-foreground">
               <CheckCircle2 className="h-4 w-4 shrink-0 text-primary" />
               <span>Excellent or Great Credit</span>
             </div>
-            <div className="flex items-center justify-center gap-2 rounded-xl border border-border/60 bg-muted/40 p-2.5 transition-all duration-300 hover:border-primary/40 hover:bg-background">
+            <div className="flex items-center gap-2 rounded-full border border-border/60 bg-white/90 px-4 py-3 text-sm font-semibold text-muted-foreground">
               <CheckCircle2 className="h-4 w-4 shrink-0 text-primary" />
               <span>Established positive credit history</span>
             </div>
-            <div className="flex items-center justify-center gap-2 rounded-xl border border-border/60 bg-muted/40 p-2.5 transition-all duration-300 hover:border-primary/40 hover:bg-background">
+            <div className="flex items-center gap-2 rounded-full border border-border/60 bg-white/90 px-4 py-3 text-sm font-semibold text-muted-foreground">
               <CheckCircle2 className="h-4 w-4 shrink-0 text-primary" />
               <span>No active delinquencies</span>
             </div>
-            <div className="flex items-center justify-center gap-2 rounded-xl border border-border/60 bg-muted/40 p-2.5 transition-all duration-300 hover:border-primary/40 hover:bg-background">
-              <CheckCircle2 className="h-4 w-4 shrink-0 text-primary" />
+            <div className="flex items-center gap-2 rounded-full border border-border/60 bg-white/90 px-4 py-3 text-sm font-semibold text-muted-foreground">
+              <Info className="h-4 w-4 shrink-0 text-primary" />
               <span>{CPP_COPY.hero.riskDisclosure}</span>
             </div>
           </div>
@@ -1010,17 +1007,17 @@ function Footer() {
                 <a href="mailto:Support@CreditPartnerPro.com" className="transition-colors hover:text-white">
                   Support
                 </a>
-                <a href="#disclosures" className="transition-colors hover:text-white">
+                <a href={CPP_LINKS.ftcDisclosures} className="transition-colors hover:text-white">
                   FTC Disclosures
                 </a>
-                <a href="mailto:Support@CreditPartnerPro.com?subject=Request%20for%20Privacy%20Policy" className="transition-colors hover:text-white">
-                  Request Privacy Policy
+                <a href={CPP_LINKS.privacyPolicy} className="transition-colors hover:text-white">
+                  Privacy Policy
                 </a>
-                <a href="mailto:Support@CreditPartnerPro.com?subject=Dispute%20Resolution%20Question" className="transition-colors hover:text-white">
-                  Ask About Dispute Resolution
+                <a href={CPP_LINKS.disputeResolution} className="transition-colors hover:text-white">
+                  Dispute Resolution
                 </a>
-                <a href="mailto:Support@CreditPartnerPro.com?subject=Request%20for%20Program%20Terms" className="transition-colors hover:text-white">
-                  Request Program Terms
+                <a href={CPP_LINKS.termsOfUse} className="transition-colors hover:text-white">
+                  Terms of Use
                 </a>
               </div>
             </div>
@@ -1069,7 +1066,7 @@ function Footer() {
             Program Risk Disclosure
           </a>
           <span className="mx-2 text-border">|</span>
-          <a href="mailto:Support@CreditPartnerPro.com?subject=Request%20for%20Company%20Information" className="transition-colors hover:text-white">
+          <a href={CPP_LINKS.companyInformation} className="transition-colors hover:text-white">
             Request company information
           </a>
         </div>

@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
+import { useEffect } from "react";
 import { Reveal } from "@/components/landing/shared";
 import { CPP_LINKS } from "@/config/cpp-links";
 
@@ -11,6 +12,14 @@ export const Route = createFileRoute("/thank-you")({
 });
 
 function ThankYouPage() {
+  useEffect(() => {
+    const isFormstackConfirmation =
+      new URLSearchParams(window.location.search).get("source") === "formstack";
+    if (isFormstackConfirmation && window.parent !== window) {
+      window.parent.postMessage({ type: "cpp-formstack-submission-success" }, "*");
+    }
+  }, []);
+
   return (
     <main className="relative isolate flex min-h-screen items-center justify-center overflow-hidden bg-white px-5 py-16">
       <Reveal

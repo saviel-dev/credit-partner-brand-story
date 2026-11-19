@@ -728,7 +728,7 @@ function SignupFormSection() {
   return (
     <section
       id="formulario"
-      className="relative isolate overflow-hidden scroll-mt-20 border-t bg-gradient-to-b from-muted/50 via-white to-white py-12 md:scroll-mt-24 md:py-16"
+      className="relative isolate overflow-hidden scroll-mt-20 border-t bg-gradient-to-b from-muted/50 via-white to-white py-10 md:scroll-mt-24 md:py-12"
     >
       <div
         aria-hidden="true"
@@ -742,14 +742,14 @@ function SignupFormSection() {
         viewport={{ once: true, amount: 0.05, margin: "-40px" }}
         className="relative z-10 mx-auto max-w-7xl px-5 md:px-8"
       >
-        <div className="mx-auto max-w-3xl">
-          <div className="mb-6 text-center">
-            <h2 className="font-hero text-3xl font-bold uppercase leading-tight tracking-tight text-foreground sm:text-4xl">
+        <div className="mx-auto max-w-2xl">
+          <div className="mb-4 text-center">
+            <h2 className="font-hero text-2xl font-bold uppercase leading-tight tracking-tight text-foreground sm:text-3xl">
               Quick Credit <span className="text-primary">Verification</span>
             </h2>
-            <div className="mx-auto mt-3 h-1 w-14 rounded-full bg-gradient-to-r from-primary/50 to-primary" />
+            <div className="mx-auto mt-2 h-1 w-12 rounded-full bg-gradient-to-r from-primary/50 to-primary" />
           </div>
-          <div className="overflow-hidden rounded-2xl border border-border/70 bg-white p-3 shadow-lift sm:p-6">
+          <div className="overflow-hidden rounded-2xl border border-border/70 bg-white p-3.5 shadow-lift sm:p-5">
             <FormstackEmbed />
           </div>
         </div>

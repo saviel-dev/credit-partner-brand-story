@@ -4,17 +4,20 @@
 
 El formulario visible recopila los datos y, al pulsar `Submit Application`, los copia al formulario oficial de Formstack que se carga dentro de un iframe oculto. La pagina principal espera una confirmacion: Formstack debe redirigir ese iframe a la pagina de agradecimiento; esa pagina envia un mensaje al formulario principal y entonces se completa el flujo.
 
-## Causa identificada
+## Causas identificadas en el flujo personalizado
 
-Al consultar la respuesta actual del embed de Formstack (`/forms/js.php/cpp_credit_report`), su configuracion devolvio `redirectUrl: null`. Por eso Formstack no redirige el iframe a `https://credittoworkcom.vercel.app/thank-you` y la pagina principal no recibe la confirmacion. El indicador de carga vence a los 45 segundos y muestra el mensaje de que Formstack no confirmo el envio.
+El embed oficial funciona por separado, pero el flujo personalizado copiaba los datos al formulario React de Formstack y los enviaba de inmediato. Se encontraron dos problemas:
 
-Que la pagina `/thank-you` exista no basta: Formstack debe tener configurada esa direccion como URL de confirmacion y devolverla en la respuesta del embed. El codigo ya acepta la URL sin `?source=formstack` y envia el mensaje de exito cuando la pagina se abre dentro del iframe.
+- La casilla obligatoria de terminos (campo `200358413`) se marcaba asignando `.checked` y despachando eventos. Formstack no actualizaba su estado React; su validacion rechazaba el formulario. La integracion ahora activa la casilla con `.click()`.
+- Al asignar el archivo y disparar `change`, Formstack inicia una carga asincrona (`/live-form/fileUpload/getUploadUrls`). El codigo intentaba enviar el formulario antes de que terminara. Ahora espera el estado accesible `Upload complete` y muestra un error si la carga falla o no finaliza.
+
+La pagina `/thank-you` envia el mensaje de exito cuando se abre dentro del iframe; el listener acepta tanto el iframe del embed como el iframe de destino.
 
 ## Que se sabe y que falta verificar
 
 - El registro de consola compartido solo mostro un aviso de hidratacion asociado a atributos agregados por una extension del navegador; no mostro un error de envio de Formstack.
-- El mensaje de timeout significa que no llego la confirmacion. Por si solo no demuestra si Formstack recibio o no los datos; no se hizo un envio real para comprobarlo.
-- La configuracion observada con `redirectUrl: null` debe corregirse en Formstack. Luego hay que volver a consultar el embed y verificar que devuelva la URL de confirmacion.
+- El mensaje de timeout significa que no llego la confirmacion. Por si solo no demuestra si Formstack recibio o no los datos; revisar las entradas de Formstack antes de volver a enviar.
+- Se probaron la validacion de la casilla y el orden de carga/envio con datos ficticios y los POST bloqueados en el navegador. No se envio ningun registro real.
 - El salto al inicio era un problema visual separado. El iframe se mantiene fijo en un area de 1 px y el submit se activa con `requestSubmit()` para evitar ese desplazamiento.
 
 ## Archivos relacionados

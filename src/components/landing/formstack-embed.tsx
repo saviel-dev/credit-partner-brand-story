@@ -191,6 +191,33 @@ function SuccessScreen({ name, onReset }: { name: string; onReset: () => void })
 // ─── Constants & Formstack Field IDs ──────────────────────────────────────────
 const FORMSTACK_SUCCESS_MESSAGE = "cpp-formstack-submission-success";
 
+async function waitForFileUpload(fileInput: HTMLInputElement) {
+  const timeoutAt = Date.now() + 30_000;
+
+  while (Date.now() < timeoutAt) {
+    const field = fileInput.closest<HTMLElement>('[data-testid^="field-"]');
+    const uploadStatus = field?.querySelector('[role="status"]')?.textContent ?? "";
+    if (/upload complete/i.test(uploadStatus)) {
+      return;
+    }
+
+    const uploadError =
+      field?.querySelector('[role="alert"]')?.textContent?.trim() ||
+      fileInput.ownerDocument
+        .querySelector<HTMLElement>('[data-testid^="error-dialog"]')
+        ?.textContent?.replace(/\b(?:Dismiss popup|Cancel|Ok)\b/g, "")
+        .replace(/\s+/g, " ")
+        .trim();
+    if (uploadError) {
+      throw new Error(`Formstack could not upload the document: ${uploadError}`);
+    }
+
+    await new Promise((resolve) => window.setTimeout(resolve, 100));
+  }
+
+  throw new Error("The document upload did not finish. Please try again.");
+}
+
 // ─── Main Formstack Component ─────────────────────────────────────────────────
 export function FormstackEmbed() {
   const [step, setStep] = useState<1 | 2 | "done">(1);
@@ -321,7 +348,7 @@ export function FormstackEmbed() {
   };
 
   // Populate and submit the official Formstack embed once.
-  const onStep2Submit = () => {
+  const onStep2Submit = async () => {
     if (!selectedFile) {
       setFileError("Please upload your credit report or ID document to continue");
       return;
@@ -370,9 +397,12 @@ export function FormstackEmbed() {
       checkboxGroups
         .flatMap((group) => Array.from(group))
         .forEach((checkbox) => {
-          checkbox.checked = true;
-          checkbox.dispatchEvent(new Event("input", { bubbles: true }));
-          checkbox.dispatchEvent(new Event("change", { bubbles: true }));
+          if (!checkbox.checked) {
+            checkbox.click();
+          }
+          if (!checkbox.checked) {
+            throw new Error("The consent fields could not be updated in the secure form.");
+          }
         });
 
       const fileInput = doc.querySelector<HTMLInputElement>('input[type="file"]');
@@ -384,6 +414,7 @@ export function FormstackEmbed() {
       fileInput.files = transfer.files;
       fileInput.dispatchEvent(new Event("input", { bubbles: true }));
       fileInput.dispatchEvent(new Event("change", { bubbles: true }));
+      await waitForFileUpload(fileInput);
 
       const submitButton = doc.querySelector<HTMLButtonElement | HTMLInputElement>(
         'button[type="submit"], input[type="submit"], .fsSubmitButton',
@@ -403,7 +434,7 @@ export function FormstackEmbed() {
       submissionTimeoutRef.current = window.setTimeout(() => {
         setIsSubmitting(false);
         setSubmissionError(
-          "Formstack did not confirm the submission. It may still have been received. Please check the form's confirmation settings before submitting again.",
+          "Formstack did not confirm the submission. It may still have been received. Please contact support before trying again to avoid a duplicate submission.",
         );
       }, 45000);
     } catch (error) {

@@ -392,7 +392,7 @@ export function FormstackEmbed() {
         throw new Error("The secure submission window could not be initialized.");
       }
       form.target = "formstack-submission-target";
-      submitButton.click();
+      form.requestSubmit(submitButton);
 
       if (submissionTimeoutRef.current !== null) {
         window.clearTimeout(submissionTimeoutRef.current);
@@ -400,7 +400,7 @@ export function FormstackEmbed() {
       submissionTimeoutRef.current = window.setTimeout(() => {
         setIsSubmitting(false);
         setSubmissionError(
-          "Formstack has not confirmed the submission. Please try again or contact support.",
+          "Formstack did not confirm the submission. It may still have been received. Please check the form's confirmation settings before submitting again.",
         );
       }, 45000);
     } catch (error) {
@@ -812,7 +812,7 @@ export function FormstackEmbed() {
         title="Formstack Background Script"
         aria-hidden="true"
         tabIndex={-1}
-        className="pointer-events-none absolute -left-[9999px] -top-[9999px] h-0 w-0 opacity-0"
+        className="pointer-events-none fixed left-0 top-0 h-px w-px opacity-0"
       />
       <iframe
         ref={submissionTargetRef}
@@ -820,7 +820,7 @@ export function FormstackEmbed() {
         title="Formstack submission result"
         aria-hidden="true"
         tabIndex={-1}
-        className="pointer-events-none absolute -left-[9999px] -top-[9999px] h-0 w-0 opacity-0"
+        className="pointer-events-none fixed left-0 top-0 h-px w-px opacity-0"
       />
     </div>
   );

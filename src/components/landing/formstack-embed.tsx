@@ -232,7 +232,10 @@ export function FormstackEmbed() {
 
   useEffect(() => {
     const handleSubmissionMessage = (event: MessageEvent<unknown>) => {
-      if (event.source !== submissionTargetRef.current?.contentWindow) {
+      const isSubmissionFrame =
+        event.source === submissionTargetRef.current?.contentWindow ||
+        event.source === formstackIframeRef.current?.contentWindow;
+      if (!isSubmissionFrame) {
         return;
       }
       if (

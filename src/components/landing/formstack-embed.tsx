@@ -196,7 +196,10 @@ async function waitForFileUpload(fileInput: HTMLInputElement) {
 
   while (Date.now() < timeoutAt) {
     const field = fileInput.closest<HTMLElement>('[data-testid^="field-"]');
-    const uploadStatus = field?.querySelector('[role="status"]')?.textContent ?? "";
+    const uploadStatus = [
+      field?.querySelector('[role="status"]')?.textContent,
+      field?.querySelector('[role="alert"]')?.textContent,
+    ].join(" ");
     if (/upload complete/i.test(uploadStatus)) {
       return;
     }

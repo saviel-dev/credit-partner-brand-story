@@ -1,20 +1,27 @@
 // Landing page "Magazine Editorial Premium" de Credit Partner Pro
 import { createFileRoute } from "@tanstack/react-router";
-import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 import {
   Award,
   ArrowUp,
   Building2,
+  CalendarDays,
   CheckCircle2,
+  ChevronDown,
   FileText,
   Info,
   Lock,
+  Loader2,
   Mail,
   Phone,
   ShieldCheck,
   Sparkles,
   TrendingUp,
+  X,
 } from "lucide-react";
 import heroPresenter from "@/assets/hero-presenter.png";
 import creditMatchingIllustration from "@/assets/credit-matching-illustration.svg";
@@ -22,6 +29,16 @@ import ctaProfessional from "@/assets/cta-professional.jpg";
 import footerLogo from "@/assets/logo blanco.png";
 import { FormstackEmbed } from "@/components/landing/formstack-embed";
 import { CALENDLY_URL, CtaButton, Reveal } from "@/components/landing/shared";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { CPP_COPY } from "@/config/cpp-copy";
 import { CPP_LINKS } from "@/config/cpp-links";
 
@@ -83,6 +100,7 @@ function Index() {
       <AssetSection />
       <ProcessSection />
       <SignupFormSection />
+      <ServiceAgreementSection />
       <TrustSection />
       <FinalCta />
       <Footer />
@@ -757,6 +775,750 @@ function SignupFormSection() {
     </section>
   );
 }
+
+function ServiceAgreementSection() {
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [hasSigned, setHasSigned] = useState(false);
+  const [hasConfirmedCall, setHasConfirmedCall] = useState(false);
+  const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
+
+  return (
+    <section
+      aria-labelledby="service-agreement-title"
+      className="border-t border-border/70 bg-muted/30 py-7 sm:py-9"
+    >
+      <div className="mx-auto max-w-7xl px-5 md:px-8">
+        <div className="mx-auto max-w-2xl rounded-2xl border border-border bg-white p-5 shadow-lift sm:p-6">
+          <div className="flex items-center gap-2">
+            <h2
+              id="service-agreement-title"
+              className="font-heading text-lg font-extrabold leading-tight tracking-tight text-foreground sm:text-xl"
+            >
+              e-Sign the Service Agreement
+            </h2>
+            <ChevronDown
+              aria-hidden="true"
+              className="h-4 w-4 shrink-0 text-primary/70"
+              strokeWidth={2.5}
+            />
+          </div>
+          <p className="mt-2 font-sans text-sm leading-relaxed text-muted-foreground">
+            e-Sign your Service Agreement in a single click. It&apos;s fast, secure, and
+            there&apos;s no cost to you.
+          </p>
+          {showConfirmation ? (
+            <div
+              aria-live="polite"
+              className="mt-4 flex animate-in flex-col items-center rounded-xl border border-border bg-white p-5 text-center fade-in slide-in-from-bottom-2 duration-300 motion-reduce:animate-none sm:p-8"
+            >
+              <span className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-primary/10 text-primary">
+                <Mail aria-hidden="true" className="h-6 w-6" />
+              </span>
+              <h3 className="font-heading text-lg font-bold text-foreground">Check your email</h3>
+              <p className="mt-2 max-w-lg font-sans text-sm leading-relaxed text-muted-foreground">
+                We sent the agreement to your email for eSign. Please check the email we sent you
+                and click the link to e-Sign the Service Agreement.
+              </p>
+              <label className="mt-5 flex cursor-pointer items-center gap-2 font-sans text-sm font-medium text-foreground transition-colors hover:text-primary">
+                <input
+                  type="checkbox"
+                  checked={hasSigned}
+                  onChange={(event) => setHasSigned(event.target.checked)}
+                  className="h-4 w-4 cursor-pointer accent-primary transition-transform duration-150 hover:scale-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                />
+                I have e-signed the agreement
+              </label>
+              <span className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-3 py-1.5 font-heading text-xs font-bold text-primary">
+                <CheckCircle2 aria-hidden="true" className="h-3.5 w-3.5" />
+                100% FREE — No payment required
+              </span>
+            </div>
+          ) : (
+            <>
+              <button
+                type="button"
+                onClick={() => setShowConfirmation(true)}
+                className="mx-auto mt-4 flex min-h-14 w-full max-w-sm cursor-pointer items-center justify-center rounded-xl bg-primary px-5 py-3 text-center font-heading text-base font-bold text-primary-foreground shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-primary/90 hover:shadow-md active:translate-y-0 active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary motion-reduce:transform-none motion-reduce:transition-none"
+              >
+                e-Sign the Service Agreement
+              </button>
+              <div className="mt-3 flex justify-center">
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-3 py-1.5 font-heading text-xs font-bold text-primary">
+                  <CheckCircle2 aria-hidden="true" className="h-3.5 w-3.5" />
+                  100% FREE — No payment required
+                </span>
+              </div>
+              <p className="mt-3 flex items-center justify-center gap-1.5 font-sans text-xs text-muted-foreground">
+                <Lock aria-hidden="true" className="h-3.5 w-3.5 text-primary" />
+                Encrypted &amp; 100% Secure
+              </p>
+            </>
+          )}
+        </div>
+        {hasSigned && (
+          <div
+            aria-labelledby="welcome-call-title"
+            aria-live="polite"
+            className="mx-auto mt-4 max-w-2xl animate-in rounded-2xl border border-border bg-white p-5 shadow-lift fade-in slide-in-from-bottom-3 duration-300 motion-reduce:animate-none sm:p-6"
+            role="region"
+          >
+            <div className="flex items-center gap-2">
+              <h2
+                id="welcome-call-title"
+                className="font-heading text-lg font-extrabold leading-tight tracking-tight text-foreground sm:text-xl"
+              >
+                Step 3: Book your Welcome Call
+              </h2>
+              <ChevronDown
+                aria-hidden="true"
+                className="h-4 w-4 shrink-0 text-primary/70"
+                strokeWidth={2.5}
+              />
+            </div>
+            <p className="mt-2 font-sans text-sm leading-relaxed text-muted-foreground">
+              You&apos;re almost there! Book your Welcome Call below — or if you&apos;ve already
+              confirmed a date and time with us, simply check the box to let us know you&apos;re all
+              set.
+            </p>
+            <div className="mt-7 rounded-xl border border-border p-4 sm:p-4">
+              <button
+                type="button"
+                onClick={() => setIsBookingModalOpen(true)}
+                className="group flex min-h-14 w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-emerald-500 px-5 py-3 text-center font-heading text-base font-bold text-white shadow-[0_8px_18px_rgba(16,185,129,0.22)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-emerald-600 hover:shadow-lg active:translate-y-0 active:scale-[0.99] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 motion-reduce:transform-none motion-reduce:transition-none"
+              >
+                <CalendarDays
+                  aria-hidden="true"
+                  className="h-4 w-4 transition-transform duration-200 group-hover:scale-110 group-hover:-rotate-6"
+                />
+                Book your Welcome Call
+              </button>
+              <div className="my-5 flex items-center gap-3 font-heading text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                <span aria-hidden="true" className="h-px flex-1 bg-border" />
+                <span>OR</span>
+                <span aria-hidden="true" className="h-px flex-1 bg-border" />
+              </div>
+              <label className="flex cursor-pointer items-center justify-center gap-3 font-sans text-sm text-foreground transition-colors hover:text-primary">
+                <input
+                  type="checkbox"
+                  checked={hasConfirmedCall}
+                  onChange={(event) => setHasConfirmedCall(event.target.checked)}
+                  className="h-5 w-5 cursor-pointer rounded accent-primary transition-transform duration-150 hover:scale-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                />
+                I&apos;ve already confirmed my Welcome Call with the team.
+              </label>
+            </div>
+          </div>
+        )}
+        <WelcomeCallModal open={isBookingModalOpen} onOpenChange={setIsBookingModalOpen} />
+      </div>
+    </section>
+  );
+}
+
+const welcomeCallFormSchema = z.object({
+  name: z
+    .string()
+    .trim()
+    .min(3, "Enter your full name")
+    .refine((value) => value.split(/\s+/).filter(Boolean).length >= 2, {
+      message: "Enter first and last name",
+    }),
+  email: z.string().trim().min(1, "Email is required").email("Enter a valid email"),
+  phone: z
+    .string()
+    .trim()
+    .min(1, "Phone is required")
+    .refine((value) => value.replace(/\D/g, "").length >= 10, {
+      message: "Enter at least 10 digits",
+    }),
+  score: z
+    .string()
+    .refine(
+      (value) => value.trim() === "" || (Number.isFinite(Number(value)) && Number(value) >= 0),
+      "Use 0 or more",
+    ),
+  consent: z.boolean().refine((value) => value, {
+    message: "Required to continue",
+  }),
+});
+
+type WelcomeCallValues = z.infer<typeof welcomeCallFormSchema>;
+
+interface WidgetSubmitEvent {
+  preventDefault: () => void;
+  target: HTMLFormElement;
+}
+
+interface WebsysAppsWidget {
+  currentStep: number;
+  mountElement: HTMLElement;
+  widgetConfig?: {
+    config?: {
+      consentCheckboxes?: Array<{ id?: string; required?: boolean }>;
+    };
+  } | null;
+  applyProductionStyling?: (this: WebsysAppsWidget) => void;
+  handleStep1Submit: (event: WidgetSubmitEvent) => Promise<void>;
+}
+
+declare global {
+  interface Window {
+    widgetInstance?: WebsysAppsWidget;
+  }
+}
+
+function WelcomeCallModal({
+  open,
+  onOpenChange,
+}: {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+}) {
+  const [step, setStep] = useState<1 | 2 | 3>(1);
+  const reduceMotion = useReducedMotion();
+  const [widgetMount, setWidgetMount] = useState<HTMLDivElement | null>(null);
+  const [loadState, setLoadState] = useState<"idle" | "loading" | "loaded" | "error">("idle");
+  const [consentId, setConsentId] = useState("legacy_disclosure_agreement");
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [retryCount, setRetryCount] = useState(0);
+  const formRef = useRef<HTMLFormElement>(null);
+  const submitCheckRef = useRef<ReturnType<typeof window.setTimeout> | null>(null);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    setValue,
+    formState: { errors },
+  } = useForm<WelcomeCallValues>({
+    resolver: zodResolver(welcomeCallFormSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      phone: "",
+      score: "",
+      consent: false,
+    },
+  });
+
+  useEffect(() => {
+    if (!open || !widgetMount) {
+      return;
+    }
+
+    let active = true;
+    let failed = false;
+    let readyHandled = false;
+    const script = document.createElement("script");
+    const observer = new MutationObserver(checkWidgetReady);
+
+    widgetMount.replaceChildren();
+    setLoadState("loading");
+    setStep(1);
+    setSubmitError(null);
+    setIsSubmitting(false);
+    script.src = "https://meeting.websysapps.com/widget-2step.js";
+    script.async = true;
+    script.setAttribute("data-widget-id", "6");
+    script.setAttribute("data-api-base-url", "https://meeting.websysapps.com");
+    script.addEventListener(
+      "load",
+      () => {
+        checkWidgetReady();
+      },
+      { once: true },
+    );
+    script.addEventListener(
+      "error",
+      () => {
+        failWidgetLoad();
+      },
+      { once: true },
+    );
+    const timeoutId = window.setTimeout(failWidgetLoad, 20_000);
+    observer.observe(widgetMount, { childList: true, subtree: true });
+    document.head.appendChild(script);
+    checkWidgetReady();
+
+    function checkWidgetReady() {
+      if (!active || failed || readyHandled) {
+        return;
+      }
+
+      const widget = window.widgetInstance;
+      if (widget?.mountElement !== widgetMount || !widget.widgetConfig?.config) {
+        return;
+      }
+
+      const applyProductionStyling = widget.applyProductionStyling;
+      if (applyProductionStyling) {
+        widget.applyProductionStyling = () => {
+          applyProductionStyling.call(widget);
+          widget.mountElement
+            .querySelectorAll<HTMLButtonElement>(".appointment-widget button")
+            .forEach((button) => {
+              [
+                "background",
+                "color",
+                "border",
+                "border-radius",
+                "padding",
+                "font-size",
+                "font-weight",
+                "font-family",
+                "cursor",
+                "width",
+                "box-sizing",
+              ].forEach((property) => button.style.removeProperty(property));
+            });
+        };
+      }
+
+      readyHandled = true;
+      observer.disconnect();
+      if (timeoutId !== undefined) {
+        window.clearTimeout(timeoutId);
+      }
+      window.setTimeout(() => {
+        if (!active) {
+          return;
+        }
+
+        widgetMount.replaceChildren();
+        const consentCheckboxes = widget.widgetConfig?.config?.consentCheckboxes ?? [];
+        setConsentId(
+          consentCheckboxes.find((checkbox) => checkbox.required)?.id ??
+            consentCheckboxes[0]?.id ??
+            "legacy_disclosure_agreement",
+        );
+        setLoadState("loaded");
+      }, 0);
+    }
+
+    function failWidgetLoad() {
+      if (!active || readyHandled) {
+        return;
+      }
+
+      failed = true;
+      observer.disconnect();
+      setLoadState("error");
+    }
+
+    return () => {
+      active = false;
+      observer.disconnect();
+      if (timeoutId !== undefined) {
+        window.clearTimeout(timeoutId);
+      }
+      if (submitCheckRef.current !== null) {
+        window.clearTimeout(submitCheckRef.current);
+        submitCheckRef.current = null;
+      }
+      script.remove();
+      widgetMount.replaceChildren();
+      if (window.widgetInstance?.mountElement === widgetMount) {
+        window.widgetInstance = undefined;
+      }
+    };
+  }, [open, retryCount, widgetMount]);
+
+  useEffect(() => {
+    if (open) {
+      reset();
+      setStep(1);
+      setSubmitError(null);
+      setConsentId("legacy_disclosure_agreement");
+    }
+  }, [open, reset]);
+
+  useEffect(() => {
+    if (step !== 2 || !widgetMount) {
+      return;
+    }
+
+    const widget = window.widgetInstance;
+    if (!widget || widget.mountElement !== widgetMount) {
+      return;
+    }
+
+    const observer = new MutationObserver(() => {
+      const successHeading = widgetMount
+        .querySelector(".appointment-widget h2")
+        ?.textContent?.trim();
+      if (successHeading === "Appointment Booked!") {
+        setStep(3);
+        return;
+      }
+
+      if (widget.currentStep === 1) {
+        widgetMount.replaceChildren();
+        setStep(1);
+        setSubmitError(null);
+      }
+    });
+    observer.observe(widgetMount, { childList: true, subtree: true });
+    return () => observer.disconnect();
+  }, [step, widgetMount]);
+
+  const handleScheduleCall = (values: WelcomeCallValues) => {
+    const widget = window.widgetInstance;
+    const form = formRef.current;
+
+    if (loadState !== "loaded" || !widget || widget.mountElement !== widgetMount || !form) {
+      setSubmitError("The scheduler is not ready yet. Please wait a moment and try again.");
+      return;
+    }
+
+    for (const [name, value] of Object.entries({
+      name: values.name,
+      email: values.email,
+      phone: values.phone,
+      score: values.score,
+    })) {
+      const input = form.querySelector<HTMLInputElement>(`[name="${name}"]`);
+      if (input) {
+        input.value = value;
+      }
+    }
+
+    widget.mountElement.querySelector(".error-message")?.remove();
+    setSubmitError(null);
+    setIsSubmitting(true);
+    void widget
+      .handleStep1Submit({ preventDefault: () => {}, target: form })
+      .catch((error: unknown) => {
+        if (submitCheckRef.current !== null) {
+          window.clearTimeout(submitCheckRef.current);
+          submitCheckRef.current = null;
+        }
+        setSubmitError(
+          error instanceof Error
+            ? error.message
+            : "We could not process your request. Please try again.",
+        );
+        setIsSubmitting(false);
+      });
+
+    const deadline = Date.now() + 60_000;
+    const checkSubmission = () => {
+      if (widget.currentStep === 2) {
+        submitCheckRef.current = null;
+        setStep(2);
+        setIsSubmitting(false);
+        return;
+      }
+
+      const errorMessage = widget.mountElement.querySelector(".error-message")?.textContent?.trim();
+      if (errorMessage) {
+        submitCheckRef.current = null;
+        setSubmitError(errorMessage);
+        setIsSubmitting(false);
+        return;
+      }
+
+      if (Date.now() >= deadline) {
+        submitCheckRef.current = null;
+        setSubmitError("The request is taking longer than expected. Please try again.");
+        setIsSubmitting(false);
+        return;
+      }
+
+      submitCheckRef.current = window.setTimeout(checkSubmission, 100);
+    };
+
+    checkSubmission();
+  };
+
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="flex max-h-[96vh] w-[92vw] max-w-xl flex-col gap-0 overflow-hidden rounded-xl border-0 bg-white p-0 text-white shadow-2xl [&>button]:hidden sm:rounded-xl">
+        <div className="relative flex min-h-[4.5rem] items-center justify-center bg-[#0f4d6b] px-12 py-3 text-center">
+          <div>
+            <DialogTitle className="font-heading text-base font-bold text-white">
+              {step === 3 ? "Appointment Booked!" : "Schedule Welcome Call"}
+            </DialogTitle>
+            <DialogDescription className="mt-1 text-sm text-white/90">
+              {step === 1
+                ? "Step 1 of 2 - Your Information"
+                : step === 2
+                  ? "Step 2 of 2 - Select Date & Time"
+                  : "Your welcome call is confirmed"}
+            </DialogDescription>
+          </div>
+          <DialogClose
+            aria-label="Close booking form"
+            className="absolute right-4 top-1/2 flex h-8 w-8 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full text-white transition-colors hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+          >
+            <X aria-hidden="true" className="h-5 w-5" />
+          </DialogClose>
+        </div>
+        <div
+          className={`welcome-call-step-content grid grid-cols-1 bg-white px-4 py-2.5 ${
+            step === 1 || step === 3
+              ? "overflow-hidden"
+              : "max-h-[calc(96vh-4.5rem)] overflow-y-auto"
+          }`}
+        >
+          <AnimatePresence initial={false}>
+            {step === 1 && (
+              <motion.form
+                ref={formRef}
+                key="welcome-call-form"
+                initial={{ opacity: 0, rotateY: -75, x: -36 }}
+                animate={{ opacity: 1, rotateY: 0, x: 0 }}
+                exit={{ opacity: 0, rotateY: 75, x: 36 }}
+                transition={{
+                  duration: reduceMotion ? 0 : 0.45,
+                  ease: "easeInOut",
+                }}
+                style={{
+                  transformOrigin: "left center",
+                  transformStyle: "preserve-3d",
+                  backfaceVisibility: "hidden",
+                }}
+                noValidate
+                onSubmit={handleSubmit(handleScheduleCall)}
+                className="col-start-1 row-start-1 space-y-2 text-[#1a2038]"
+              >
+                {loadState === "loading" && (
+                  <div
+                    aria-live="polite"
+                    className="flex items-center gap-2 text-xs text-muted-foreground"
+                    role="status"
+                  >
+                    <Loader2 aria-hidden="true" className="h-3.5 w-3.5 animate-spin" />
+                    Connecting to the scheduler…
+                  </div>
+                )}
+                {loadState === "error" && (
+                  <div className="flex items-center justify-between gap-3" role="alert">
+                    <p className="text-xs text-destructive">
+                      The scheduler could not be loaded. Check your connection and try again.
+                    </p>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setRetryCount((count) => count + 1)}
+                      className="shrink-0"
+                    >
+                      Try again
+                    </Button>
+                  </div>
+                )}
+
+                <div className="grid grid-cols-2 gap-x-3 gap-y-2">
+                  <div className="space-y-1 text-left">
+                    <Label
+                      htmlFor="name"
+                      className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground"
+                    >
+                      Full Name <span className="text-primary">*</span>
+                    </Label>
+                    <Input
+                      id="name"
+                      autoComplete="name"
+                      placeholder="Your full name"
+                      aria-invalid={Boolean(errors.name)}
+                      aria-describedby={errors.name ? "welcome-name-error" : undefined}
+                      className="h-9 border-[#d1d5db] text-sm"
+                      {...register("name")}
+                    />
+                    {errors.name && (
+                      <p
+                        id="welcome-name-error"
+                        className="text-[10px] leading-tight text-destructive"
+                      >
+                        {errors.name.message}
+                      </p>
+                    )}
+                  </div>
+
+                  <div className="space-y-1 text-left">
+                    <Label
+                      htmlFor="email"
+                      className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground"
+                    >
+                      Email Address <span className="text-primary">*</span>
+                    </Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      autoComplete="email"
+                      placeholder="name@example.com"
+                      aria-invalid={Boolean(errors.email)}
+                      aria-describedby={errors.email ? "welcome-email-error" : undefined}
+                      className="h-9 border-[#d1d5db] text-sm"
+                      {...register("email")}
+                    />
+                    {errors.email && (
+                      <p
+                        id="welcome-email-error"
+                        className="text-[10px] leading-tight text-destructive"
+                      >
+                        {errors.email.message}
+                      </p>
+                    )}
+                  </div>
+
+                  <div className="space-y-1 text-left">
+                    <Label
+                      htmlFor="phone"
+                      className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground"
+                    >
+                      Phone Number <span className="text-primary">*</span>
+                    </Label>
+                    <Input
+                      id="phone"
+                      type="tel"
+                      autoComplete="tel"
+                      placeholder="(555) 123-4567"
+                      aria-invalid={Boolean(errors.phone)}
+                      aria-describedby={errors.phone ? "welcome-phone-error" : undefined}
+                      className="h-9 border-[#d1d5db] text-sm"
+                      {...register("phone")}
+                    />
+                    {errors.phone && (
+                      <p
+                        id="welcome-phone-error"
+                        className="text-[10px] leading-tight text-destructive"
+                      >
+                        {errors.phone.message}
+                      </p>
+                    )}
+                  </div>
+
+                  <div className="space-y-1 text-left">
+                    <Label
+                      htmlFor="score"
+                      className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground"
+                    >
+                      Approximate Credit Score
+                    </Label>
+                    <Input
+                      id="score"
+                      type="number"
+                      min="0"
+                      step="1"
+                      inputMode="numeric"
+                      placeholder="Optional"
+                      aria-invalid={Boolean(errors.score)}
+                      aria-describedby={errors.score ? "welcome-score-error" : undefined}
+                      className="h-9 border-[#d1d5db] text-sm"
+                      {...register("score")}
+                    />
+                    {errors.score && (
+                      <p
+                        id="welcome-score-error"
+                        className="text-[10px] leading-tight text-destructive"
+                      >
+                        {errors.score.message}
+                      </p>
+                    )}
+                  </div>
+                </div>
+
+                <section
+                  aria-labelledby="welcome-consent-heading"
+                  className="space-y-1 border-t border-border/70 pt-2"
+                >
+                  <h3
+                    id="welcome-consent-heading"
+                    className="text-[10px] font-bold uppercase tracking-wide text-[#1a2038]"
+                  >
+                    eSignature &amp; Consent to Communications
+                  </h3>
+                  <p className="text-[10px] leading-[1.25] text-muted-foreground">
+                    By submitting this form, you agree to our Terms of Use, Privacy Policy, Refund
+                    Policy (No Refunds), FTC Disclosures, Legal Terms, and Dispute Resolution
+                    Policy, including final and binding arbitration on an individual basis and a
+                    waiver of all class or representative actions, including TCPA and
+                    communications-related claims.
+                  </p>
+                  <p className="text-[10px] leading-[1.25] text-muted-foreground">
+                    You authorize us and our affiliates, partners, successors, and related brands
+                    (present or future) to contact you via any communication channel (phone, SMS,
+                    email, WhatsApp, AI or automated systems, prerecorded messages, or similar
+                    technologies), to monitor or record calls, and to use AI-assisted agents,
+                    regarding this and future matters. Consent is required to engage or transact.
+                    SMS opt-out is by replying STOP. This agreement survives any opt-out or
+                    termination.
+                  </p>
+                </section>
+
+                <div className="space-y-1">
+                  <label
+                    htmlFor={`consent-${consentId}`}
+                    className="flex cursor-pointer items-start gap-2 text-[10px] leading-[1.25] text-[#1a2038]"
+                  >
+                    <input
+                      id={`consent-${consentId}`}
+                      name={`consent-${consentId}`}
+                      type="checkbox"
+                      required
+                      onChange={(event) =>
+                        setValue("consent", event.target.checked, { shouldValidate: true })
+                      }
+                      className="mt-0.5 h-3.5 w-3.5 shrink-0 cursor-pointer accent-[#1a2f6b] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                    />
+                    <span>
+                      I agree to Binding Arbitration and consent to AI-assisted, automated, and
+                      recorded communications as described above.
+                    </span>
+                  </label>
+                  {errors.consent && (
+                    <p className="text-[10px] leading-tight text-destructive" role="alert">
+                      {errors.consent.message}
+                    </p>
+                  )}
+                </div>
+
+                {submitError && (
+                  <p className="text-xs text-destructive" role="alert">
+                    {submitError}
+                  </p>
+                )}
+
+                <Button
+                  id={loadState === "loaded" ? "schedule-btn" : undefined}
+                  type="submit"
+                  disabled={loadState !== "loaded" || isSubmitting}
+                  className="h-10 w-full rounded-lg bg-[#1a2f6b] text-sm font-semibold text-white shadow-[0_2px_8px_rgba(26,47,107,0.2)] hover:bg-[#142653]"
+                >
+                  {isSubmitting ? "Processing…" : "Schedule welcome call"}
+                </Button>
+              </motion.form>
+            )}
+          </AnimatePresence>
+          <motion.div
+            ref={setWidgetMount}
+            id="widget-mount-6"
+            initial={false}
+            animate={
+              step === 1 ? { opacity: 0, rotateY: 75, x: 36 } : { opacity: 1, rotateY: 0, x: 0 }
+            }
+            transition={{
+              duration: reduceMotion ? 0 : 0.45,
+              ease: "easeInOut",
+            }}
+            style={{
+              width: "100%",
+              minHeight: "400px",
+              transformOrigin: "right center",
+              transformStyle: "preserve-3d",
+              backfaceVisibility: "hidden",
+            }}
+            className={`welcome-call-widget col-start-1 row-start-1 ${
+              step === 1 ? "hidden" : ""
+            } ${step === 3 ? "welcome-call-confirmation" : ""}`}
+          />
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
 // 5. Confianza y seguridad: tarjetas institucionales elevadas con tipografías coherentes
 // 5. Confianza y seguridad: estética avanzada con objetos animados y certificación en vivo
 const TRUST = [
@@ -1151,10 +1913,17 @@ function Footer() {
 
         <div
           id="disclosures"
-          className="scroll-mt-20 mb-6 border-l-4 border-disclosure-border bg-disclosure px-5 py-4 text-sm leading-relaxed text-foreground md:scroll-mt-24"
+          className="scroll-mt-20 mb-6 border-l-4 border-disclosure-border bg-disclosure px-5 py-3 text-sm text-foreground md:scroll-mt-24"
         >
-          <strong>IMPORTANT RISK &amp; EARNINGS DISCLOSURE:</strong> {CPP_COPY.footer.riskEarnings}{" "}
-          <strong>PLATFORM DISCLAIMER:</strong> {CPP_COPY.footer.platformDisclaimer}
+          <div className="space-y-2 leading-snug">
+            <p>
+              <strong>IMPORTANT RISK &amp; EARNINGS DISCLOSURE:</strong>{" "}
+              {CPP_COPY.footer.riskEarnings}
+            </p>
+            <p>
+              <strong>PLATFORM DISCLAIMER:</strong> {CPP_COPY.footer.platformDisclaimer}
+            </p>
+          </div>
         </div>
 
         {/* Declaración de cumplimiento y due diligence */}

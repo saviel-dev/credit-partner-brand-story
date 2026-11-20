@@ -692,3 +692,12 @@
   font-size: 13px !important;
   line-height: 1.2 !important;
 }
+
+.service-agreement-section {
+  background:
+    linear-gradient(to bottom, var(--background), transparent 22%, transparent 78%, var(--background)),
+    linear-gradient(to right, var(--background), transparent 14%, transparent 86%, var(--background)),
+    radial-gradient(ellipse at 12% 20%, oklch(0.9 0.06 158 / 65%), transparent 32rem),
+    radial-gradient(ellipse at 88% 82%, oklch(0.92 0.045 220 / 70%), transparent 34rem),
+    linear-gradient(135deg, oklch(0.98 0.014 160), oklch(0.96 0.02 225));
+}

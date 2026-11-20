@@ -785,7 +785,7 @@ function ServiceAgreementSection() {
   return (
     <section
       aria-labelledby="service-agreement-title"
-      className="border-t border-border/70 bg-muted/30 py-7 sm:py-9"
+      className="service-agreement-section border-t border-border/70 py-7 sm:py-9"
     >
       <div className="mx-auto max-w-7xl px-5 md:px-8">
         <div className="mx-auto max-w-2xl rounded-2xl border border-border bg-white p-5 shadow-lift sm:p-6">
